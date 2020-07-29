@@ -1,0 +1,21 @@
+\begin{align*}
+
+\frac{dS}{dt} = \dot{S}  &= \underbrace{\mu N}_\textrm{birth} - \underbrace{\beta S I / N}_\textrm{infection} + \underbrace{\omega R}_\textrm{lost immunity} - \underbrace{ \mu S}_\text{death} - \underbrace{p S}_\text{vaccination} 
+
+\\
+
+\frac{dE}{dt} = \dot{E} &=  \underbrace{\beta S I / N}_\textrm{infection} - \underbrace{\sigma E}_\textrm{latency} - \underbrace{\mu E}_\text{death}
+
+\\
+
+\frac{dI}{dt} = \dot{I} &=  \underbrace{\sigma E}_\textrm{latency} - \underbrace{\gamma I}_\text{recovery} - \underbrace{(\mu + \alpha)I}_\text{death}
+
+\\
+
+\frac{dR}{dt} = \dot{R} &= \underbrace{p S}_\textrm{vaccination} + \underbrace{\gamma I}_\textrm{recovery} - \underbrace{\omega R}_\textrm{lost immunity}  - \underbrace{\mu R}_\textrm{death}
+
+\\
+
+\frac{dB}{dt} = \dot{B} &= \underbrace{\beta S I / N}_\textrm{infection}
+
+\end{align*}
