@@ -27,13 +27,18 @@ plots3 = function(params) {
 
   title1 = sprintf("Effect of vaccination on cumulative disease burden. %s",param1_text)
   plot1 = plot1 + my.plot_axis(xlab="t",ylab="cumulative burden, B",
-                               ymin=0,ymax=1,ypercent=1,ysec=0)
-                                                 #xmin=0,xmax=,
-                                                 #ymin=0,
-                                                 #ymax=1,
-                                                 #ylog10min=min(sir_init_i,imin),
-                                                 #dlog10=input$log2,
-                                                 #ysec=0,xpercent=0)
+                               xmin=0,
+                               xmax=tmax/365,
+                               ymin=0,ymax=1,
+                               ypercent)
+  plot2 = plot2 + my.plot_axis(xlab="susceptible fraction (%)",ylab="infected fraction (%)",
+                               xmin=min(df1$S),
+                               xmax=max(df1$S),
+                               ymin=0,
+                               ymax=max(df1$I),
+                               xpercent=1,
+                               ypercent=1)
+  
   
   caption1 = paste("Caption.")
   caption1 = paste(caption1,sir_caption(tmax,params$p))

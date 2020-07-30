@@ -111,24 +111,19 @@ axis_spacing = function(min=0,max=1,default=0.2) {
   return(spacing)
 }
 
-my.plot_axis = function(xlab="years",
-                        ylab="percent of population (%)",
-                        xmin    = NULL, xmax  = NULL,
-                        ymin    = NULL, ymax  = NULL,
-                        ylog10min = NA,
-                        log10    = 0,    
-                        dlog10   = 0,
-                        ysec     = 1,
-                        ypercent = 1,
-                        xpercent = 0) {
-  xlim = ! is.null(xmin) & ! is.null(xmax)
-  ylim = ! is.null(ymin) & ! is.null(ymax)
-  #cat(paste(xlim,ylim))
-  if(ylim) {
-    by   = axis_spacing(ymin,ymax)
-  } else {
-    
-  }
+my.plot_axis = function(xlab="time (years)",
+                        ylab="infected fraction (%)",
+                        xmin      = 0, xmax  = NULL,
+                        ymin      = 0, ymax  = NULL,
+                        xlog10min = NULL,
+                        ylog10min = NULL,
+                        log10     = 0,    
+                        dlog10    = 0,
+                        ysec      = 0,
+                        ypercent  = 1,
+                        xpercent  = 0) {
+  
+  by  = axis_spacing(ymin,ymax)
   opt  = list()
   if(xpercent) {
     xfun = label_to_percent
@@ -140,39 +135,22 @@ my.plot_axis = function(xlab="years",
   } else {
     yfun = label_to_identity
   }
-  
-  if(xlim) {
-    opt = append(opt,scale_x_continuous(xlab,lim=c(xmin,xmax),labels=xfun))
-  } else {
-    opt = append(opt,scale_x_continuous(xlab,labels=xfun))
-  }
-  
+
+  opt = append(opt,scale_x_continuous(xlab,lim=c(xmin,xmax),labels=xfun))
+
   # secondary y axis
   if(ysec) {
-    if(ylim) {
-      opt = append(opt,scale_y_continuous(ylab,lim=c(ymin,ymax),breaks=seq(ymin,ymax,by=by),labels=yfun,sec.axis=sec_axis(~ 100*./ymax,name="cumulative burden (%)")))
-    } else {
-      opt = append(opt,scale_y_continuous(ylab,labels=yfun))
-    }
+    opt = append(opt,scale_y_continuous(ylab,lim=c(ymin,ymax),breaks=seq(ymin,ymax,by=by),labels=yfun,sec.axis=sec_axis(~ 100*./ymax,name="cumulative burden (%)")))
   } else {
     opt = append(opt,scale_y_continuous(ylab,labels=yfun))
   }
   # log or double log axis
   if(log10 | dlog10) {
-      br   = c(0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1)
-      if(ylim) {
-        opt  = append(opt,scale_y_log10(ylab,lim=c(ymin,ymax),breaks=br,labels=yfun))
-      } else {
-        opt  = append(opt,scale_y_log10(ylab,lim=c(ylog10min,NA),breaks=br,labels=yfun))
-      }
+      br   = c(0.00005,0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1)
+      opt  = append(opt,scale_y_log10(ylab,lim=c(ylog10min,ymax),breaks=br,labels=yfun))
       if(dlog10) {
-        br   = c(0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)
-        if(xlim) {
-          cat()
-          opt  = append(opt,scale_x_log10(xlab,lim=c(xmin,xmax),breaks=br,labels=xfun))
-        } else {
-          opt  = append(opt,scale_x_log10(xlab,breaks=br,labels=xfun))
-        }
+        br   = c(0.00005,0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)
+        opt  = append(opt,scale_x_log10(xlab,lim=c(xlog10min,xmax),breaks=br,labels=xfun))
       }
   }
   return(opt)

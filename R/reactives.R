@@ -28,7 +28,7 @@ calculate2 = function(params2a,params2b,params2c,params2d) {
   i       = 1
   for(p in list(params2a0,params2a,params2b,params2c0,params2c,params2d)) {
     params      = p
-    for(R0 in sort(unique(c(params2a$R0,params2b$R0,seq(R0_min,R0_max,by=R0_step2))))) {
+    for(R0 in sort(unique(c(params2a$R0,params2b$R0,R0_max,seq(R0_min,R0_max,by=R0_step2))))) {
       params$R0   = R0
       params$beta = get_beta(params)
       seirs       = seirs(params,steps=sir_system_steps)

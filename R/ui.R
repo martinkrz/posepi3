@@ -5,36 +5,38 @@ read_latex = function(file) {
 }
 
 eq_seirs = read_latex("latex/seirs.tex")
-eq_equil = read_latex("latex/seirs.equilibrium.tex")
 eq_param = read_latex("latex/seirs.parameters.tex")
-eq_age   = read_latex("latex/seirs.age-dependent.tex")
 eq_r0    = read_latex("latex/seirs.r0.tex")
-eq_period= read_latex("latex/seirs.period.tex")
-eq_endemic_age= read_latex("latex/seirs.endemic-age.tex")
-eq_jacobian= read_latex("latex/seirs.jacobian.tex")
-eq_eigenvalue= read_latex("latex/seirs.eigenvalue.tex")
+
+#eq_equil = read_latex("latex/seirs.equilibrium.tex")
+#eq_age   = read_latex("latex/seirs.age-dependent.tex")
+#eq_period= read_latex("latex/seirs.period.tex")
+#eq_endemic_age= read_latex("latex/seirs.endemic-age.tex")
+#eq_jacobian= read_latex("latex/seirs.jacobian.tex")
+#eq_eigenvalue= read_latex("latex/seirs.eigenvalue.tex")
 
 ui = fluidPage( theme=("css/style.css"),
                 shinyjs::useShinyjs(),
                 htmlOutput("masthead"),
                 navbarPage("Uncertainty and the modelling and management of infectious epidemics",id="tabs",
-                           tabPanel("Immunity and R0 uncertainty",value=1,id=1,
+                           tabPanel(HTML("Uncertainty in immunity duration and <i>R</i><sub>0</sub>"),value=1,id=1,
                                     fluidRow(
                                       column(4,id="sidebar1",
-                                      #sidebarPanel(
                                         div(id="form1",
-                                            sliderInput("R01", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"), 
+                                          HTML("<p class='normal grey small'>Uncertainty in <i>R</i><sub>0</sub> and 1/<i>&omega;</i> will be modeled by simulating minimum and maximum values.</p>"),
+                                        sliderInput("R01", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"),
                                                         value = c(R0M_default,R0_default),
                                                         min = R0_min, max = R0_max, step = R0_step),
-                                        sliderInput("ip1", HTML("Infectious period, 1/<i>&gamma;</i> (days)"), 
+                                        sliderInput("id1", HTML("Immunity duration, 1/<i>&omega;</i> (years)"),
+                                                    value = c(idshort_default,idlong_default),
+                                                    min = id_step, max = id_max, step = id_step),
+                                        HTML("<p class='normal grey small'>Remaining parameters are assumed to be accurately known and will remain fixed.</p>"),
+                                        sliderInput("ip1", HTML("Infectious period, 1/<i>&gamma;</i> (days)"),
                                                     value = ip_default,
                                                     min = 1, max = ip_max, step = ip_step),
                                         sliderInput("lp1", HTML("Latent period, 1/<i>&sigma;</i> (days)"),
                                                     value = lp_default,
                                                     min = lp_min, max = lp_max, step = lp_step),
-                                        sliderInput("id1", HTML("Immunity duration, 1/<i>&omega;</i> (years)"),
-                                                    value = c(idshort_default,idlong_default),
-                                                    min = id_step, max = id_max, step = id_step),
                                         sliderInput("le1", HTML("Life expectancy, 1/<i>&mu;</i> (years)"),
                                                     value = le_default,
                                                     min = 1, max = le_max, step = le_step),
@@ -50,10 +52,10 @@ ui = fluidPage( theme=("css/style.css"),
                                         fluidRow(
                                           column(8,offset=2,id="buttons",
                                         checkboxInput("log1", HTML("log<sub>10</sub> axes"), FALSE),
-                                        checkboxInput("points1", HTML("show time points"), TRUE),
-                                        checkboxInput("sir1",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
-                                        checkboxInput("text1",HTML("interpretive text"),FALSE),
-                                        checkboxInput("captions1",HTML("figure captions"),TRUE),
+                                        #checkboxInput("points1", HTML("show time points"), TRUE),
+                                        #checkboxInput("sir1",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
+                                        checkboxInput("text1",HTML("interpretive text"),interpretive_default),
+                                        checkboxInput("captions1",HTML("figure captions"),captions_default),
                                         actionButton("refresh1","Reset")
                                           )
                                         )
@@ -126,9 +128,9 @@ ui = fluidPage( theme=("css/style.css"),
                                       #            min = R0_min, max = R0_max, step = R0_step),    
                                       fluidRow(
                                         column(8,offset=2,id="buttons",
-                                            checkboxInput("log2", HTML("log<sub>10</sub> axes"), TRUE),
-                                            checkboxInput("points2", HTML("show time points"),   TRUE),
-                                            checkboxInput("sir2",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
+                                            #checkboxInput("log2", HTML("log<sub>10</sub> axes"), TRUE),
+                                            #checkboxInput("points2", HTML("show time points"),   TRUE),
+                                            #checkboxInput("sir2",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
                                             checkboxInput("text2",HTML("interpretive text"),     FALSE),
                                             checkboxInput("captions2",HTML("figure captions"),   TRUE),
                                             actionButton("refresh2","Reset")

@@ -43,7 +43,7 @@ get_params = function(R0,ip=0,lp=0,id=0,le=0,al=0,p=0,tmax=0) {
   out$beta   = get_beta(out)
   #out$A      = (out$omega+out$mu+out$gamma)/( (out$omega+out$mu) * (out$beta-out$gamma-out$mu) )
   #out$cfr    = out$alpha/(out$gamma+out$mu+out$alpha)
-  #out$stars  = stars(out)
+  out$stars  = stars(out)
   #out$period = ieperiod(out)
   #print(out)
   return(out)
@@ -113,7 +113,7 @@ seirs = function(params, tmax, steps=sir_system_steps) {
             E = sir_init_i, 
             I = 0, 
             R = 0,
-            B = 0)
+            B = sir_init_i)
   out   = ode(y     = start, 
               times = time, 
               func  = seirs_system, 

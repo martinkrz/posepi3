@@ -119,9 +119,14 @@ p3_step = 0.1
 # do timings
 do_timing            = FALSE
 
+interpretive_default = FALSE
+captions_default     = FALSE
+
 if(debug) {
-  sir_system_steps  = 100
-  R0_step2          = 0.5
+  sir_system_steps     = 50
+  R0_step2             = 0.5
+  interpretive_default = TRUE
+  captions_default     = TRUE
 }
 source("R/format.helpers.R",local=TRUE)
 source("R/ggplot.helpers.R",local=TRUE)

@@ -221,6 +221,16 @@ table tr td:first-child td {
 	font-size: 80%;
 }
 
+.normal {
+	font-weight: normal !important;	
+}
+.grey {
+	color: #666 !important;
+}
+.small {
+	font-size: 90%;
+}
+
 em {
 	color: red;
 	font-weight: bold;

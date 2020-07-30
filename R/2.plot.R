@@ -40,14 +40,12 @@ plots2 = function(params2a,params2b,params2c,params2d) {
   title1 = sprintf("Effect of management actions on cumulative burden. %s",param1_text)
   
   plot1 = plot1 + my.plot_axis(xlab="R0",ylab="cumulative burden, B",
-                               ymin=0,ymax=1,ypercent=1,ysec=0)
-                                                 #xmin=0,xmax=,
-                                                 #ymin=0,
-                                                 #ymax=1,
-                                                 #ylog10min=min(sir_init_i,imin),
-                                                 #dlog10=input$log2,
-                                                 #ysec=0,xpercent=0)
-  
+                               xmin=1,
+                               xmax=max(df1$R0),
+                               ymin=0,
+                               ymax=1,
+                               ypercent=1)
+
   caption1 = paste("Caption.")
   caption1 = paste(caption1,sir_caption(tmax,params2a$p))
 

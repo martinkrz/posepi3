@@ -3,37 +3,44 @@ plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0
   out     = df1()
   df1a    = out[[1]]  # R0max idmin
   df1b    = out[[2]]  # R0min idmin
-  
-  df2a    = out[[3]]  # R0max idmin
-  df2b    = out[[4]]  # R0min idmin
+  df2a    = out[[3]]  # R0max idmax
+  df2b    = out[[4]]  # R0min idmax
 
+  tmax    = max(df1a$time)
+  # max burden
+  Bmax = max(df1a$B)
+  
   plot1  = ggplot()  # I, B
   plot2  = ggplot()  # I, B
   plot3  = ggplot()  # I vs S
   plot4  = ggplot()
-  
-  tmax    = max(df1a$time)
-  
-  # minimum I that is above S(0), this is for setting minimum y-axis values for log plots
-  t0      = df[df1a$I > sir_init_i,]$time[1] 
-  imin    = min(df1a[df1a$time > t0,]$I)
 
-  # minimum S for phase plane
-  smin    = min(df1a$S)
-
-  # max burden
-  Bmax = max(df1a$B)
-  
+  log = input$log1
   plot1ymax = min(1,ceilToFraction(max(df1a$I),0.05))
-    
-  plot1 = plot1 + geom_area(data=df1a, mapping=aes(x=time/365,y=I,fill="I"),size=plot_line_width,alpha=0.7)
-  plot1 = plot1 + geom_area(data=df1b, mapping=aes(x=time/365,y=I,fill="R"),size=plot_line_width,alpha=0.7)
+
+  t0   = df1a[df1a$I > sir_init_i,]$time[1] 
+  smin = min(df1a[df1a$time > t0,]$S,
+             df1b[df1b$time > t0,]$S,
+             df2a[df2a$time > t0,]$S,
+             df2b[df2b$time > t0,]$S)
+  if(log) {
+    imin = min(df1a[df1a$time > t0,]$I,
+               df1b[df1b$time > t0,]$I,
+               df2a[df2a$time > t0,]$I,
+               df2b[df2b$time > t0,]$I
+               )
+  } else {
+    imin = 0
+  }
+  
+  plot1 = plot1 + geom_ribbon(data=df1a, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="I"),size=plot_line_width,alpha=0.7)
+  plot1 = plot1 + geom_ribbon(data=df1b, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="R"),size=plot_line_width,alpha=0.7)
 
   plot1 = plot1 + geom_line(data=df1a, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"),size=plot_line_width)
   plot1 = plot1 + geom_line(data=df1b, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"),size=plot_line_width)
   
-  plot2 = plot2 + geom_area(data=df2a, mapping=aes(x=time/365,y=I,fill="I"),size=plot_line_width,alpha=0.7)
-  plot2 = plot2 + geom_area(data=df2b, mapping=aes(x=time/365,y=I,fill="R"),size=plot_line_width,alpha=0.7)
+  plot2 = plot2 + geom_ribbon(data=df2a, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="I"),size=plot_line_width,alpha=0.7)
+  plot2 = plot2 + geom_ribbon(data=df2b, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="R"),size=plot_line_width,alpha=0.7)
   
   plot2 = plot2 + geom_line(data=df2a, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"),size=plot_line_width)
   plot2 = plot2 + geom_line(data=df2b, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"),size=plot_line_width)
@@ -74,7 +81,7 @@ plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0
                        params1a$id/365,
                        params1a$le/365,
                        params1a$alpha,
-                       params1a$p*100)
+                       params1a$p*100*365)
   param_text2 = sprintf("<i>R</i><sub>0</sub> = %.1f&ndash;%.1f, 1/<i>&beta;</i> = %.2f&ndash;%.2f days, 1/<i>&gamma;</i> = %d days, 1/<i>&sigma;</i> = %d days, 1/<i>&omega;</i> = %.1f years, 1/<i>&mu;</i> = %d years and <i>&alpha;</i> = %.3f/day with %.0f%% annual vaccination rate.",
                         params1b$R0,
                         params1a$R0,
@@ -85,36 +92,53 @@ plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0
                         params1c$id/365,
                         params1b$le/365,
                         params1b$alpha,
-                        params1b$p*100)
+                        params1b$p*100*365)
 
   title1 = sprintf("Infected fraction and disease burden for short duration immunity. %s",param_text1)
   title2 = sprintf("Infected fraction and disease burden for long duration immunity. %s",param_text2)
   title3 = sprintf("Phase plane of <i>I</i> vs <i>S</i> for short duration immunity. %s",param_text1)
   title4 = sprintf("Phase plane of <i>I</i> vs <i>S</i> for long duration immunity. %s",param_text2)
-  
+ 
   plot1 = plot1 + my.plot_legend + my.plot_axis(xlab="years",
                                                 ylab="infected fraction (%)",
-                                                ylog10min=min(sir_init_i,imin),
                                                 xmin=0,
                                                 xmax=tmax/365,
-                                                ymin=0,
+                                                ymin=imin,
+                                                ylog10min=imin/1.5,
                                                 ymax=plot1ymax,
                                                 ysec=1,
-                                                log10=input$log1)
+                                                log10=log)
+  
+  plot3 = plot3 + my.plot_legend + my.plot_axis(xlab="susceptible fraction (%)",ylab="infected fraction (%)",
+                                                xmin      = smin,
+                                                xlog10min = smin,
+                                                xmax      = 1,
+                                                ylog10min = imin,
+                                                ymax      = plot1ymax,
+                                                ypercent=1,
+                                                xpercent=1,
+                                                dlog10=log)
+  
+  
   plot2 = plot2 + my.plot_legend + my.plot_axis(xlab="years",
                                                 ylab="infected fraction (%)",
-                                                ylog10min=min(sir_init_i,imin),
                                                 xmin=0,
                                                 xmax=tmax/365,
-                                                ymin=0,
+                                                ymin=imin,
+                                                ylog10min=imin/1.5,
                                                 ymax=plot1ymax,
                                                 ysec=1,
-                                                log10=input$log1)
-  plot3 = plot3 + my.plot_legend + my.plot_axis(xlab="susceptible fraction (%)",ylab="infected fraction (%)",
-                                                xmin=smin,xmax=1,
-                                                ylog10min=min(sir_init_i,imin),
-                                                dlog10=input$log1,
-                                                ysec=0,xpercent=1)
+                                                log10=log)
+  
+  plot4 = plot4 + my.plot_legend + my.plot_axis(xlab="susceptible fraction (%)",ylab="infected fraction (%)",
+                                                xmin=smin,
+                                                xlog10min = smin,
+                                                xmax=1,
+                                                ylog10min=imin,                                                
+                                                ymax=plot1ymax,
+                                                ypercent=1,
+                                                xpercent=1,
+                                                dlog10=log)
   
   caption1 = paste("The SEIRS infected fraction and cumulative disease burden for",param_text1," Burden is normalized to",varfmt("B",Bmax,prec=2),"at",varfmt("t",tmax/365,prec=1,units="years for the scenario with short immunity and high infectivity."))
   caption2 = paste("The SEIRS infected fraction and cumulative disease burden for",param_text2," Burden is normalized to",varfmt("B",Bmax,prec=2),"at",varfmt("t",tmax/365,prec=1,units="years for the scenario with short immunity and high infectivity."))
@@ -122,11 +146,6 @@ plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0
   caption3 = paste("The phase plane of",varfmt("I(t)"),"vs",varfmt("S(t)"),"for the SEIRS model with",param_text1,"Horizontal dashed lines represent endemic equilibrium values.")
   caption4 = paste("The phase plane of",varfmt("I(t)"),"vs",varfmt("S(t)"),"for the SEIRS model with",param_text2,"Horizontal dashed lines represent endemic equilibrium values.")
   
-  if(input$points1 == TRUE) {
-    #caption1 = paste(caption1,"Points on the trajectory of",varfmt("I"),"indicate time in steps of 1 year (solid) or one quarter (hollow) over the first",n_periods,"inter-epidemic intervals",varfmt("T_E.",params$period/365,units="years",prec=2))
-    #caption2 = paste(caption2,"Points on the trajectory indicate time in steps of 1 year (solid) or one quarter (hollow) over the first",n_periods,"inter-epidemic intervals",varfmt("T_E.",params$period/365,units="years",prec=2))
-  }
-
   caption1 = paste(caption1,sir_caption(tmax,params1a$p))
   caption2 = paste(caption2,sir_caption(tmax,params1a$p))
   caption3 = paste(caption3,sir_caption(tmax,params1a$p))
