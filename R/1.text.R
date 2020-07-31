@@ -6,14 +6,16 @@ output$text1intro = renderPrint({
   params1d = params1d()
   params   = params1a
  
-  out     = df1() 
-  df1a    = out[[1]]  # R0max idmin
-  df1b    = out[[2]]  # R0min idmin
-  df2a    = out[[3]]  # R0max idmin
-  df2b    = out[[4]]  # R0min idmin
-  
-  tmax    = max(df1a$time)
-  # max burden
+  data = df1() 
+
+  out   = data[[1]]
+  peaks = data[[2]]
+  df1a = out %>% filter(R0==params1a$R0 & id==params1a$id) # R0max idmin
+  df1b = out %>% filter(R0==params1b$R0 & id==params1b$id) # R0min idmin
+  df2a = out %>% filter(R0==params1c$R0 & id==params1c$id) # R0max idmax
+  df2b = out %>% filter(R0==params1d$R0 & id==params1d$id) # R0min idmax
+ 
+  tmax = params1a$tmax  
   Bmax = max(df1a$B)
   
   table(title="SEIRS parameters",rows=makerows(c(

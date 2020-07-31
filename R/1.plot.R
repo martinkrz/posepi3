@@ -1,75 +1,82 @@
 plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0,p=0) {
 
-  out     = df1()
-  df1a    = out[[1]]  # R0max idmin
-  df1b    = out[[2]]  # R0min idmin
-  df2a    = out[[3]]  # R0max idmax
-  df2b    = out[[4]]  # R0min idmax
+  data   = df1()
 
-  tmax    = max(df1a$time)
-  # max burden
-  Bmax = max(df1a$B)
+  out    = data[[1]]
+  peaks  = data[[2]]
+
+  df1a   = out %>% filter(R0==params1a$R0 & id==params1a$id) # R0max idmin
+  df1b   = out %>% filter(R0==params1b$R0 & id==params1b$id) # R0min idmin
+  df1c   = out %>% filter(R0==params1c$R0 & id==params1c$id) # R0max idmax
+  df1d   = out %>% filter(R0==params1d$R0 & id==params1d$id) # R0min idmax
+
+  tmax   = params1a$tmax
+  Bmax   = max(out$B)
   
-  plot1  = ggplot()  # I, B
-  plot2  = ggplot()  # I, B
-  plot3  = ggplot()  # I vs S
-  plot4  = ggplot()
+  plot1  = ggplot() # I, B
+  plot2  = ggplot() # I, B
+  plot3  = ggplot() # I vs S
+  plot4  = ggplot() # I vs S
 
-  log = input$log1
-  plot1ymax = min(1,ceilToFraction(max(df1a$I),0.05))
+  log       = input$log1
+  plot1ymax = min(1,ceilToFraction(max(out$I),0.05))
 
-  t0   = df1a[df1a$I > sir_init_i,]$time[1] 
-  smin = min(df1a[df1a$time > t0,]$S,
-             df1b[df1b$time > t0,]$S,
-             df2a[df2a$time > t0,]$S,
-             df2b[df2b$time > t0,]$S)
+  t0   = min(out[out$I > sir_init_i,]$time)
+  smin = min(out[out$time > t0,]$S)
   if(log) {
-    imin = min(df1a[df1a$time > t0,]$I,
-               df1b[df1b$time > t0,]$I,
-               df2a[df2a$time > t0,]$I,
-               df2b[df2b$time > t0,]$I
-               )
+    imin = min(out[out$time > t0,]$I)
   } else {
     imin = 0
+  }
+
+  # flu bands
+  for(t1 in seq(tflu_start,tmax,by=365)) {
+    t2 = min(tmax,t1 + tflu_duration)
+    plot1 = plot1 + geom_ribbon(data=data.frame(x=c(t1,t2)),mapping=aes(x=x/365,ymax=plot1ymax,ymin=imin/1.5),fill=palette["C1"],alpha=0.15)
   }
   
   plot1 = plot1 + geom_ribbon(data=df1a, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="I"),size=plot_line_width,alpha=0.7)
   plot1 = plot1 + geom_ribbon(data=df1b, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="R"),size=plot_line_width,alpha=0.7)
+  plot1 = plot1 + geom_line(  data=df1a, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"), size=plot_line_width)
+  plot1 = plot1 + geom_line(  data=df1b, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"), size=plot_line_width)
+  
+  plot2 = plot2 + geom_ribbon(data=df1c, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="I"),size=plot_line_width,alpha=0.7)
+  plot2 = plot2 + geom_ribbon(data=df1d, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="R"),size=plot_line_width,alpha=0.7)
+  plot2 = plot2 + geom_line(  data=df1c, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"), size=plot_line_width)
+  plot2 = plot2 + geom_line(  data=df1d, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"), size=plot_line_width)
 
-  plot1 = plot1 + geom_line(data=df1a, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"),size=plot_line_width)
-  plot1 = plot1 + geom_line(data=df1b, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"),size=plot_line_width)
-  
-  plot2 = plot2 + geom_ribbon(data=df2a, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="I"),size=plot_line_width,alpha=0.7)
-  plot2 = plot2 + geom_ribbon(data=df2b, mapping=aes(x=time/365,ymax=I,ymin=imin/1.5,fill="R"),size=plot_line_width,alpha=0.7)
-  
-  plot2 = plot2 + geom_line(data=df2a, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="I"),size=plot_line_width)
-  plot2 = plot2 + geom_line(data=df2b, mapping=aes(x=time/365,y=plot1ymax*B/Bmax,color="R"),size=plot_line_width)
-  
-  peaks1a = find_peaks(df1a)
-  peaks1b = find_peaks(df1b)
-  plot1 = plot1 + geom_point(data=peaks1a,mapping=aes(x/365,y),color="black",fill=palette["I"],size=3,stroke=1,shape=21)
-  plot1 = plot1 + geom_point(data=peaks1b,mapping=aes(x/365,y),color="black",fill=palette["R"],size=3,stroke=1,shape=21)
+  plot1 = plot1 + geom_line( data=peaks %>% filter(i < 3 & id == params1a$id), mapping=aes(x=time/365,y=y,group=i),
+  size=plot_line_width/2) 
+  plot1 = plot1 + geom_point(data=peaks %>% filter(i < 3 & id == params1a$id & R0 ==
+  trunc(R0)), mapping=aes(x=time/365,y=y,group=i), shape=21, fill="white", color="black",size=3,stroke=1)
+  plot1 = plot1 + geom_point(data=peaks %>% filter(i < 3 & id == params1a$id & R0 !=
+  trunc(R0)), mapping=aes(x=time/365,y=y,group=i), shape=21, fill="white", color="black",size=2,stroke=1)
 
-  peaks2a = find_peaks(df2a)
-  peaks2b = find_peaks(df2b)
-  plot2 = plot2 + geom_point(data=peaks2a,mapping=aes(x/365,y),color="black",fill=palette["I"],size=3,stroke=1,shape=21)
-  plot2 = plot2 + geom_point(data=peaks2b,mapping=aes(x/365,y),color="black",fill=palette["R"],size=3,stroke=1,shape=21)
+  plot2 = plot2 + geom_line( data=peaks %>% filter(i < 3 & id == params1c$id), mapping=aes(x=time/365,y=y,group=i),
+  size=plot_line_width/2) 
+  plot2 = plot2 + geom_point(data=peaks %>% filter(i < 3 & id == params1c$id & R0 ==
+  trunc(R0)), mapping=aes(x=time/365,y=y,group=i), shape=21, fill="white", color="black",size=3,stroke=1)
+  plot2 = plot2 + geom_point(data=peaks %>% filter(i < 3 & id == params1c$id & R0 !=
+  trunc(R0)), mapping=aes(x=time/365,y=y,group=i), shape=21, fill="white", color="black",size=2,stroke=1)
+ 
+  plot1   = plot1 + geom_point(data=peaks %>% filter(i < 3 & id == params1a$id & R0 == params1a$R0),mapping=aes(time/365,y),color="black",fill=palette["I"],size=3,stroke=1,shape=21)
+  plot1   = plot1 + geom_point(data=peaks %>% filter(i < 3 & id == params1b$id & R0 == params1b$R0),mapping=aes(time/365,y),color="black",fill=palette["R"],size=3,stroke=1,shape=21)
+  plot2   = plot2 + geom_point(data=peaks %>% filter(i < 3 & id == params1c$id & R0 == params1c$R0),mapping=aes(time/365,y),color="black",fill=palette["I"],size=3,stroke=1,shape=21)
+  plot2   = plot2 + geom_point(data=peaks %>% filter(i < 3 & id == params1d$id & R0 == params1d$R0),mapping=aes(time/365,y),color="black",fill=palette["R"],size=3,stroke=1,shape=21)
   
-  #plot1 = plot1 + geom_hline(data=df,yintercept=params1$stars$I,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
-
   plot3 = plot3 + geom_path(data=df1a,aes(x=S,y=I),colour=palette["I"],size=plot_line_width)
   plot3 = plot3 + geom_path(data=df1b,aes(x=S,y=I),colour=palette["R"],size=plot_line_width)
-  plot3 = plot3 + geom_hline(data=df1a,yintercept=params1a$stars$I,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
-  plot3 = plot3 + geom_vline(data=df1a,xintercept=params1a$stars$S,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
-  plot3 = plot3 + geom_hline(data=df1b,yintercept=params1b$stars$I,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
-  plot3 = plot3 + geom_vline(data=df1b,xintercept=params1b$stars$S,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
+  plot3 = plot3 + geom_hline(yintercept=params1a$stars$I,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
+  plot3 = plot3 + geom_vline(xintercept=params1a$stars$S,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
+  plot3 = plot3 + geom_hline(yintercept=params1b$stars$I,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
+  plot3 = plot3 + geom_vline(xintercept=params1b$stars$S,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
   
-  plot4 = plot4 + geom_path(data=df2a,aes(x=S,y=I),colour=palette["I"],size=plot_line_width)
-  plot4 = plot4 + geom_path(data=df2b,aes(x=S,y=I),colour=palette["R"],size=plot_line_width)
-  plot4 = plot4 + geom_hline(data=df2a,yintercept=params1a$stars$I,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
-  plot4 = plot4 + geom_vline(data=df2a,xintercept=params1a$stars$S,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
-  plot4 = plot4 + geom_hline(data=df2b,yintercept=params1b$stars$I,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
-  plot4 = plot4 + geom_vline(data=df2b,xintercept=params1b$stars$S,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
+  plot4 = plot4 + geom_path(data=df1c,aes(x=S,y=I),colour=palette["I"],size=plot_line_width)
+  plot4 = plot4 + geom_path(data=df1d,aes(x=S,y=I),colour=palette["R"],size=plot_line_width)
+  plot4 = plot4 + geom_hline(yintercept=params1c$stars$I,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
+  plot4 = plot4 + geom_vline(xintercept=params1c$stars$S,colour=palette["I"],size=plot_line_width/2,linetype="dashed")
+  plot4 = plot4 + geom_hline(yintercept=params1d$stars$I,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
+  plot4 = plot4 + geom_vline(xintercept=params1d$stars$S,colour=palette["R"],size=plot_line_width/2,linetype="dashed")
   
   param_text1 = sprintf("<i>R</i><sub>0</sub> = %.1f&ndash;%.1f, 1/<i>&beta;</i> = %.2f&ndash;%.2f days, 1/<i>&gamma;</i> = %d days, 1/<i>&sigma;</i> = %d days, 1/<i>&omega;</i> = %.1f years, 1/<i>&mu;</i> = %d years and <i>&alpha;</i> = %.3f/day with %.0f%% annual vaccination rate.",
                        params1b$R0,

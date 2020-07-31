@@ -1,18 +1,39 @@
 
-# Panel 1: trajectories for a range of R0 and id 
-calculate1 = function(params1a,params1b,params1c,params1d) { # R0,ip,lp,id,le,alpha,p) {
-  #print(params1)
-  seirs1 = seirs(params1a,steps=sir_system_steps) 
-  seirs2 = seirs(params1b,steps=sir_system_steps) 
-  seirs3 = seirs(params1c,steps=sir_system_steps) 
-  seirs4 = seirs(params1d,steps=sir_system_steps) 
-  #sir_tmax = sir_t_bound(params,tol=sir_init_i/2,tmax=1000) # beta=p$R0*p$gamma,gamma=p$gamma,vac=p$p,tol=sir_init_i/2,tmax=1000)
-  #sir      = sir(params,tmax=sir_tmax) #beta=p$R0*p$gamma,gamma=p$gamma,vac=p$p,tmax=sir_tmax)
-  return(list(seirs1,seirs2,seirs3,seirs4))
+# Panel 1: position of peaks
+calculate1 = function(params1a,params1b,params1c,params1d) {
+  t0   = Sys.time()
+  out  = data.frame()
+
+  df1a = seirs(params1a)
+  df1b = seirs(params1b)
+  df1c = seirs(params1c)
+  df1d = seirs(params1d)
+
+  out   = rbind(out,df1a,df1b,df1c,df1d) # R0max idmin
+  peaks = data.frame()
+  peaks = rbind(peaks,find_peaks(df1a),find_peaks(df1b),find_peaks(df1c),find_peaks(df1d))  
+  # peaks
+  for(R0 in seq(1.25,R0_max,by=0.25)) {
+    if(R0 > params1b$R0 & R0 < params1a$R0) {
+      p      = params1a
+      p$R0   = R0      
+      p$beta = get_beta(p)
+      peaks  = rbind(peaks,find_peaks(seirs(p)))
+      p      = params1c
+      p$R0   = R0      
+      p$beta = get_beta(p)
+      peaks  = rbind(peaks,find_peaks(seirs(p)))
+    }
+  }
+  peaks = peaks %>% arrange(i,R0)
+  t1 = Sys.time()
+  report_timing(t0,t1)
+  return(list(out,peaks))
 }
 
 # Panel 2: phase plane
 calculate2 = function(params2a,params2b,params2c,params2d) {
+  t0  = Sys.time()
   R0_max = 4 + (params2a$R0 > 4)
   out    = data.frame()
   params2a0   = params2a
@@ -45,17 +66,40 @@ calculate2 = function(params2a,params2b,params2c,params2d) {
     }
     i = i + 1
   }
+  t1 = Sys.time()
+  report_timing(t0,t1)
   return(list(out))
 }
 
-calculate3 = function(params3) { # R0,ip,lp,id,le,alpha,p) {
+calculate3 = function(params3) {
+  t0 = Sys.time()
   out = data.frame()
   for(p in seq(p3_min,p3_max,by=p3_step)) {
     params   = params3
     params$p = p/365
-    seirs1  = seirs(params,steps=sir_system_steps) 
+    seirs1   = seirs(params,steps=sir_system_steps) 
     out      = rbind(out,seirs1)
   }
-  return(list(out))
+  t1 = Sys.time()
+  report_timing(t0,t1)
+  return(out)
 }
 
+calculate4 = function(paramsa,paramsb,paramsc,paramsd) {
+  t0 = Sys.time()
+  out = data.frame()  
+  R0min = paramsb$R0
+  R0max = paramsa$R0
+  idmin = paramsa$id
+  idmax = paramsc$id
+  for(id in seq(idmin/365,idmax/365,by=0.25)) {    
+    for(R0 in sort(unique(c(R0min,R0max,seq(R0min,R0max,by=R0_step2))))) {      
+      p   = get_params(R0, paramsa$ip, paramsa$lp, id, paramsa$le/365, paramsa$al, paramsa$p*365, paramsa$tmax/365)
+      df  = seirs(p)
+      out = rbind(out,df[nrow(df),])
+    }
+  }    
+  t1 = Sys.time()
+  report_timing(t0,t1)
+  return(out)
+}

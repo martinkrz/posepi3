@@ -118,7 +118,7 @@ seirs = function(params, tmax, steps=sir_system_steps) {
               times = time, 
               func  = seirs_system, 
               parms = unlist(params))
-  out   = cbind(out,data.frame(R0=params$R0,beta=params$beta,p=params$p))
+  out   = cbind(out,data.frame(R0=params$R0,beta=params$beta,id=params$id,p=params$p))
   return(as.data.frame(out))
 }
 
@@ -186,7 +186,7 @@ ieperiod = function(params) {
 }
 
 # https://stats.stackexchange.com/questions/22974/how-to-find-local-peaks-valleys-in-a-series-of-data
-find_peaks = function (out,m=1){
+find_peaks = function(out,m=1){
   t = out$time
   x = out$I
   shape = diff(sign(diff(x, na.pad = FALSE)))
@@ -198,6 +198,6 @@ find_peaks = function (out,m=1){
     if(all(x[c(z : i, (i + 2) : w)] <= x[i + 1])) return(i + 1) else return(numeric(0))
   })
   pks = unlist(pks)
-  return(data.frame(x=t[pks],y=x[pks]))
+  return(data.frame(time=t[pks],y=x[pks],i=1:length(pks),beta=out$beta[1],R0=out$R0[1],id=out$id[1],p=out$p[1]))
 }
 

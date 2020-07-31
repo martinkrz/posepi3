@@ -1,18 +1,25 @@
+### Effect of vaccination
+
 plots3 = function(params) {
 
-  out   = df3()
-  df1   = out[[1]]
+  df    = df3()  
   tmax  = params$tmax
-  Bmax  = max(df1$B)
-  df1$B = df1$B/Bmax
+  Bmax  = max(df$B)
+  df$B  = df$B/Bmax
   plot1 = ggplot()
   plot2 = ggplot()
   
-  #df1 = df1 %>% group_by(id,R0) %>% mutate(Bmin=min(B),Bmax=max(B)) %>% ungroup(id) %>% ungroup(R0)
-  plot1 = plot1 + geom_line(data=df1,aes(x=time/365,y=B,group=p),size=plot_line_width)
-  plot2 = plot2 + geom_path(data=df1,aes(x=S,y=I,group=p),size=plot_line_width)
-  #plot1 = plot1 + geom_line(data=df1,aes(x=R0,y=B,color=pstr,group=paste(m,pstr)),size=plot_line_width) 
-  #plot1 = plot1 + geom_point(data=df1%>%filter(a!=FALSE),aes(x=R0,y=B,fill=pstr,color=m),stroke=1,shape=21,size=3) 
+  #df = df %>% group_by(id,R0) %>% mutate(Bmin=min(B),Bmax=max(B)) %>% ungroup(id) %>% ungroup(R0)
+  plot1 = plot1 + geom_line(data=df %>% filter(p==0),aes(x=time/365,y=B),size=plot_line_width,color=palette["C3"])
+  plot1 = plot1 + geom_line(data=df %>% filter(p>0), aes(x=time/365,y=B,group=p,color=p),size=plot_line_width) + scale_color_distiller(palette = "Spectral")
+
+  plot1 = plot1 + geom_label(data=df %>% filter(time==tmax),aes(x=tmax/365,y=B,label=365*p),hjust="left",fill="white",nudge_x = 0.1)
+
+  plot2 = plot2 + geom_path(data=df %>% filter(p==0),aes(x=S,y=I),size=plot_line_width,color=palette["C3"])
+  plot2 = plot2 + geom_path(data=df %>% filter(p>0) ,aes(x=S,y=I,group=p,color=p),size=plot_line_width) + scale_color_distiller(palette = "Spectral")
+
+  #plot1 = plot1 + geom_line(data=df,aes(x=R0,y=B,color=pstr,group=paste(m,pstr)),size=plot_line_width) 
+  #plot1 = plot1 + geom_point(data=df%>%filter(a!=FALSE),aes(x=R0,y=B,fill=pstr,color=m),stroke=1,shape=21,size=3) 
   #plot1 = plot1 + scale_color_manual(values = palette)
   #plot1 = plot1 + scale_fill_manual(values = palette)
   
@@ -28,17 +35,16 @@ plots3 = function(params) {
   title1 = sprintf("Effect of vaccination on cumulative disease burden. %s",param1_text)
   plot1 = plot1 + my.plot_axis(xlab="t",ylab="cumulative burden, B",
                                xmin=0,
-                               xmax=tmax/365,
+                               xmax=tmax/365+0.25,
                                ymin=0,ymax=1,
                                ypercent)
   plot2 = plot2 + my.plot_axis(xlab="susceptible fraction (%)",ylab="infected fraction (%)",
-                               xmin=min(df1$S),
-                               xmax=max(df1$S),
+                               xmin=min(df$S),
+                               xmax=max(df$S),
                                ymin=0,
-                               ymax=max(df1$I),
+                               ymax=max(df$I),
                                xpercent=1,
                                ypercent=1)
-  
   
   caption1 = paste("Caption.")
   caption1 = paste(caption1,sir_caption(tmax,params$p))

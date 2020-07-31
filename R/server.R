@@ -8,6 +8,8 @@ server = function(input, output, session) {
   source("R/2.plot.R",local=TRUE)
   source("R/3.text.R",local=TRUE)
   source("R/3.plot.R",local=TRUE)
+  source("R/4.text.R",local=TRUE)
+  source("R/4.plot.R",local=TRUE)
   
   ### UI QOL settings
   # reset form
@@ -23,8 +25,11 @@ server = function(input, output, session) {
   observeEvent(input$text3,    { toggle(anim = TRUE, animType = "slide", time = 0.5,  selector =".copy3", condition = input$text3) })
   observeEvent(input$captions3,{ toggle(anim = TRUE, animType = "slide", time = 0.5,  selector =".caption3", condition = input$captions3) })
   
-  #Make sure that vaccination slider maxes out at p_c
+  observeEvent(input$refresh4, { shinyjs::reset("form4") })
+  observeEvent(input$text4,    { toggle(anim = TRUE, animType = "slide", time = 0.5,  selector =".copy4", condition = input$text4) })
+  observeEvent(input$captions4,{ toggle(anim = TRUE, animType = "slide", time = 0.5,  selector =".caption4", condition = input$captions4) })
   
+  #Make sure that vaccination slider maxes out at p_c  
   #observe(updateSliderInput(session, "R0max2", max = 4+(input$R02[2]>4) floor(100*(1-1/input$R01))))
 
   # calculate parameters from all inputs
@@ -40,6 +45,11 @@ server = function(input, output, session) {
   
   params3 = reactive(get_params(input$R03, input$ip3, input$lp3, input$id3, input$le3, input$al3, 0, input$tmax3)) %>% throttle(1000)
 
+  params4a = reactive(get_params(input$R04[2], input$ip4, input$lp4, input$id4[1], input$le4, input$al4, input$p4/100, input$tmax4)) %>% throttle(1000)
+  params4b = reactive(get_params(input$R04[1], input$ip4, input$lp4, input$id4[1], input$le4, input$al4, input$p4/100, input$tmax4)) %>% throttle(1000)
+  params4c = reactive(get_params(input$R04[2], input$ip4, input$lp4, input$id4[2], input$le4, input$al4, input$p4/100, input$tmax4)) %>% throttle(1000)
+  params4d = reactive(get_params(input$R04[1], input$ip4, input$lp4, input$id4[2], input$le4, input$al4, input$p4/100, input$tmax4)) %>% throttle(1000)
+
   df1 = reactive(calculate1(params1a(),params1b(),params1c(),params1d())) %>% throttle(1000)
   p1  = reactive(    plots1(params1a(),params1b(),params1c(),params1d())) %>% throttle(1000)
 
@@ -48,6 +58,9 @@ server = function(input, output, session) {
   
   df3 = reactive(calculate3(params3())) %>% throttle(1000)
   p3  = reactive(    plots3(params3())) %>% throttle(1000)
+
+  df4 = reactive(calculate4(params4a(),params4b(),params4c(),params4d())) %>% throttle(1000)
+  p4  = reactive(    plots4(params4a(),params4b(),params4c(),params4d())) %>% throttle(1000)
   
   report_timing = function(t0,t1) {
     if(do_timing) {

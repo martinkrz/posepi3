@@ -92,61 +92,72 @@ ui = fluidPage( theme=("css/style.css"),
                                       )
                                     )),
                            
-                           tabPanel("EVPI",value=2,id=2,
+                           tabPanel("Cumulative burden",value=4,id=4,
                                     fluidRow(
-                                      column(4,id="form2",
-                                      #fluidRow(
-                                      #  column(6,HTML("<h5 class=t1>Scenario 1</h5>")),
-                                      #  column(6,HTML("<h5 class=t2>Scenario 2</h5>"))
-                                      #),
-                                      sliderInput("R02", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"), 
-                                                  value = c(R0_A1,R0_A2),
-                                                  min = R0_min, max = R0_max, step = R0_step),
-                                      sliderInput("ip2", HTML("Infectious period, 1/<i>&gamma;</i> (days)"), 
-                                                  value = ip_default,
-                                                  min = 1, max = ip_max, step = ip_step),
-                                      sliderInput("lp2", HTML("Latent period, 1/<i>&sigma;</i> (days)"),
-                                                  value = lp_default,
-                                                  min = lp_min, max = lp_max, step = lp_step),
-                                      sliderInput("id2", HTML("Immunity duration, 1/<i>&omega;</i> (years)"),
-                                                  value = c(idshort_default,idlong_default),
-                                                  min = id_step, max = id_max, step = id_step),
-                                      sliderInput("le2", HTML("Life expectancy, 1/<i>&mu;</i> (years)"),
-                                                  value = le_default,
-                                                  min = 1, max = le_max, step = le_step),
-                                      sliderInput("al2", HTML("Death onset, 1/<i>&alpha;</i> (days)"),
-                                                  value = al_default,
-                                                  min = 0, max = al_max, step = al_step),
-                                      sliderInput("p2", HTML("annual vaccination rate, <i>p</i> (% per year)"), 
-                                                  value = c(p_A1,p_A2),
-                                                  min = p_min, max = p_max, step = p_step),
-                                      sliderInput("tmax2", HTML("time, <i>t</i><sub>max</sub> (years)"), 
-                                                  value = tmax_default,
-                                                  min = tmax_min, max = tmax_max, step = tmax_step),                  
-                                      #sliderInput("R0max2", HTML("<i>R</i><sub>0,max</sub>"), 
-                                      #            value = R0_Amax,
-                                      #            min = R0_min, max = R0_max, step = R0_step),    
-                                      fluidRow(
-                                        column(8,offset=2,id="buttons",
-                                            #checkboxInput("log2", HTML("log<sub>10</sub> axes"), TRUE),
-                                            #checkboxInput("points2", HTML("show time points"),   TRUE),
-                                            #checkboxInput("sir2",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
-                                            checkboxInput("text2",HTML("interpretive text"),     FALSE),
-                                            checkboxInput("captions2",HTML("figure captions"),   TRUE),
-                                            actionButton("refresh2","Reset")
-                                        )
-                                      )
+                                      column(4,id="sidebar4",
+                                             #sidebarPanel(
+                                             div(id="form4",
+                                                 sliderInput("R04", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"), 
+                                                             value = c(R0M_default,R0_default),                                                                                                                     
+                                                             min = R0_min, max = R0_max, step = R0_step),
+                                                 sliderInput("ip4", HTML("Infectious period, 1/<i>&gamma;</i> (days)"), 
+                                                             value = ip_default,
+                                                             min = 1, max = ip_max, step = ip_step),
+                                                 sliderInput("lp4", HTML("Latent period, 1/<i>&sigma;</i> (days)"),
+                                                             value = lp_default,
+                                                             min = lp_min, max = lp_max, step = lp_step),
+                                                 sliderInput("id4", HTML("Immunity duration, 1/<i>&omega;</i> (years)"),
+                                                             value = c(idshort_default,idlong_default),
+                                                             min = id_step, max = id_max, step = id_step),
+                                                 sliderInput("le4", HTML("Life expectancy, 1/<i>&mu;</i> (years)"),
+                                                             value = le_default,
+                                                             min = 1, max = le_max, step = le_step),
+                                                 sliderInput("al4", HTML("Death onset, 1/<i>&alpha;</i> (days)"),
+                                                             value = al_default,
+                                                             min = 0, max = al_max, step = al_step),
+                                                 sliderInput("p4", HTML("annual vaccination rate, <i>p</i> (% per year)"), 
+                                                    value = 0,
+                                                    min = 0, max = 99, step = 1),
+                                                 sliderInput("tmax4", HTML("time horizon, <i>t</i><sub>max</sub> (years)"), 
+                                                             value = tmax_default,
+                                                             min = tmax_min, max = tmax_max, step = tmax_step),
+                                                 fluidRow(
+                                                   column(8,offset=2,id="buttons",
+                                                          #checkboxInput("log4", HTML("log<sub>10</sub> axes"), FALSE),
+                                                          #checkboxInput("points1", HTML("show time points"), TRUE),
+                                                          #checkboxInput("sir1",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
+                                                          checkboxInput("text4",HTML("interpretive text"),interpretive_default),
+                                                          checkboxInput("captions4",HTML("figure captions"),captions_default),
+                                                          actionButton("refresh4","Reset")
+                                                   )
+                                                 )
+                                             )
                                       ),
-                                      column(8,id="main2",
-                                                div(HTML("Exploring the SEIRS phase plane"),class="paneltitle"),
-                                                div(htmlOutput("text2"),class="copy copy2"),
-                                                div(
-                                                  div(htmlOutput("title2a"),class="title"),
-                                                  div(plotOutput("plot2a",height=500,width="auto"),class="plot"),
-                                                  div(htmlOutput("caption2a"),class="caption caption2"),
-                                                  class="plotbox")
-                                      )
-                                    )),
+                                      column(8,id="main4",
+                                             #mainPanel(
+                                             div(HTML("Cumulative disease burden"),class="paneltitle"),
+                                             div(htmlOutput("text4intro"),class="copy copy4"),
+                                             #tabsetPanel(
+                                             #  tabPanel("Trajectories",
+                                                        #div(htmlOutput("text1a"),class="copy copy1"),
+                                                        div(
+                                                          div(htmlOutput("title4a"),class="title"),
+                                                          div(plotOutput("plot4a",height=500,width="auto"),class="plot"),
+                                                          div(htmlOutput("caption4a"),class="caption caption4"),
+                                                          class="plotbox")
+                                              # )
+                                               #tabPanel("Phase plane",
+                                               #         #div(htmlOutput("text1b"),class="copy copy1"),
+                                               #         div(
+                                               #           div(htmlOutput("title4b"),class="title"),
+                                               #           div(plotOutput("plot4b",height=500,width="auto"),class="plot"),
+                                               #           div(htmlOutput("caption4b"),class="caption caption4"),
+                                               #           class="plotbox")
+                                               #)
+                                             
+                                      
+                                    ))),
+                           
                            
                            tabPanel("Vaccination",value=3,id=3,
                                     fluidRow(
@@ -171,7 +182,7 @@ ui = fluidPage( theme=("css/style.css"),
                                                  sliderInput("al3", HTML("Death onset, 1/<i>&alpha;</i> (days)"),
                                                              value = al_default,
                                                              min = 0, max = al_max, step = al_step),
-                                                 sliderInput("tmax3", HTML("time, <i>t</i><sub>max</sub> (years)"), 
+                                                 sliderInput("tmax3", HTML("time horizon, <i>t</i><sub>max</sub> (years)"), 
                                                              value = tmax_default,
                                                              min = tmax_min, max = tmax_max, step = tmax_step),
                                                  fluidRow(
@@ -179,8 +190,8 @@ ui = fluidPage( theme=("css/style.css"),
                                                           #checkboxInput("log1", HTML("log<sub>10</sub> axes"), FALSE),
                                                           #checkboxInput("points1", HTML("show time points"), TRUE),
                                                           #checkboxInput("sir1",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
-                                                          checkboxInput("text3",HTML("interpretive text"),FALSE),
-                                                          checkboxInput("captions3",HTML("figure captions"),TRUE),
+                                                          checkboxInput("text3",HTML("interpretive text"),interpretive_default),
+                                                          checkboxInput("captions3",HTML("figure captions"),captions_default),
                                                           actionButton("refresh3","Reset")
                                                    )
                                                  )
@@ -211,6 +222,61 @@ ui = fluidPage( theme=("css/style.css"),
                                       )
                                     )),
                            
+                           tabPanel("EVPI",value=2,id=2,
+                                    fluidRow(
+                                      column(4,id="form2",
+                                      #fluidRow(
+                                      #  column(6,HTML("<h5 class=t1>Scenario 1</h5>")),
+                                      #  column(6,HTML("<h5 class=t2>Scenario 2</h5>"))
+                                      #),
+                                      sliderInput("R02", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"), 
+                                                  value = c(R0_A1,R0_A2),
+                                                  min = R0_min, max = R0_max, step = R0_step),
+                                      sliderInput("ip2", HTML("Infectious period, 1/<i>&gamma;</i> (days)"), 
+                                                  value = ip_default,
+                                                  min = 1, max = ip_max, step = ip_step),
+                                      sliderInput("lp2", HTML("Latent period, 1/<i>&sigma;</i> (days)"),
+                                                  value = lp_default,
+                                                  min = lp_min, max = lp_max, step = lp_step),
+                                      sliderInput("id2", HTML("Immunity duration, 1/<i>&omega;</i> (years)"),
+                                                  value = c(idshort_default,idlong_default),
+                                                  min = id_step, max = id_max, step = id_step),
+                                      sliderInput("le2", HTML("Life expectancy, 1/<i>&mu;</i> (years)"),
+                                                  value = le_default,
+                                                  min = 1, max = le_max, step = le_step),
+                                      sliderInput("al2", HTML("Death onset, 1/<i>&alpha;</i> (days)"),
+                                                  value = al_default,
+                                                  min = 0, max = al_max, step = al_step),
+                                      sliderInput("p2", HTML("annual vaccination rate, <i>p</i> (% per year)"), 
+                                                  value = c(p_A1,p_A2),
+                                                  min = p_min, max = p_max, step = p_step),
+                                      sliderInput("tmax2", HTML("time horizon, <i>t</i><sub>max</sub> (years)"), 
+                                                  value = tmax_default,
+                                                  min = tmax_min, max = tmax_max, step = tmax_step),                  
+                                      #sliderInput("R0max2", HTML("<i>R</i><sub>0,max</sub>"), 
+                                      #            value = R0_Amax,
+                                      #            min = R0_min, max = R0_max, step = R0_step),    
+                                      fluidRow(
+                                        column(8,offset=2,id="buttons",
+                                            #checkboxInput("log2", HTML("log<sub>10</sub> axes"), TRUE),
+                                            #checkboxInput("points2", HTML("show time points"),   TRUE),
+                                            #checkboxInput("sir2",HTML("show SIR <i>I</i>(<i>t</i>) trajectory"),TRUE),
+                                            checkboxInput("text2",HTML("interpretive text"),     interpretive_default),
+                                            checkboxInput("captions2",HTML("figure captions"),   captions_default),
+                                            actionButton("refresh2","Reset")
+                                        )
+                                      )
+                                      ),
+                                      column(8,id="main2",
+                                                div(HTML("Expected value of perfect information"),class="paneltitle"),
+                                                div(htmlOutput("text2intro"),class="copy copy2"),
+                                                div(
+                                                  div(htmlOutput("title2a"),class="title"),
+                                                  div(plotOutput("plot2a",height=500,width="auto"),class="plot"),
+                                                  div(htmlOutput("caption2a"),class="caption caption2"),
+                                                  class="plotbox")
+                                      )
+                                    )),
                            
                            tabPanel("Equations",value=4,id=4,
                                     withMathJax(
@@ -233,7 +299,7 @@ ui = fluidPage( theme=("css/style.css"),
                                       helpText("$$E(0) = 0.001$$"),
                                       helpText("$$I(0) = 0$$"),
                                       helpText("$$R(0) = 0$$"),
-                                      helpText("$$B(0) = 0$$"),
+                                      helpText("$$B(0) = 0.001$$"),
                                       helpText("$$S + E + I + R = N = 1$$")
                                     ),
                                     p("where",tags$i("p"),"is the annual vaccination rate and",tags$i("B"),"is the cumulative disease burden.")

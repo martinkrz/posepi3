@@ -1,9 +1,5 @@
 # This is messy but I don't know how else to do it.
 
-output$title1 = renderPrint({
-  cat("<div class=paneltitle>The SEIRS model of infection spread</div>")
-})
-
 output$title1a = renderPrint({
   index = p1()[[2]][[1]]
   title = p1()[[3]][[1]]
@@ -87,4 +83,32 @@ output$caption3a = renderPrint({
 output$caption3b = renderPrint({
   cat(paste("<p>", p3()[[4]][[2]], "</p>", sep = ""))
 })
+
+output$title4a = renderPrint({
+  index = p4()[[2]][[1]]
+  title = p4()[[3]][[1]]
+  cat(figure_title(index, title))
+})
+output$title4b = renderPrint({
+  index = p4()[[2]][[2]]
+  title = p4()[[3]][[2]]
+  cat(figure_title(index, title))
+})
+
+output$plot4a = renderPlot({
+  p4()[[1]][[1]]
+})
+output$plot4b = renderPlot({
+  p4()[[1]][[2]]
+})
+
+output$caption4a = renderPrint({
+  cat(paste("<p>", p4()[[4]][[1]], "</p>", sep = ""))
+})
+output$caption4b = renderPrint({
+  cat(paste("<p>", p4()[[4]][[2]], "</p>", sep = ""))
+})
+
+
+
 

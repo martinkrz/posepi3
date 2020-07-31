@@ -112,6 +112,9 @@ tmax_min             = 1
 tmax_max             = 10
 tmax_default         = 4
 tmax_step            = 0.1
+# flu 
+tflu_start    = 304
+tflu_duration = 122
 # vaccination plot
 p3_min = 0
 p3_max = 0.9
@@ -123,10 +126,11 @@ interpretive_default = FALSE
 captions_default     = FALSE
 
 if(debug) {
-  sir_system_steps     = 50
+  sir_system_steps     = 200
   R0_step2             = 0.5
   interpretive_default = TRUE
   captions_default     = TRUE
+  do_timing = TRUE
 }
 source("R/format.helpers.R",local=TRUE)
 source("R/ggplot.helpers.R",local=TRUE)

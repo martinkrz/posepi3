@@ -51,7 +51,7 @@ plots2 = function(params2a,params2b,params2c,params2d) {
 
   return(list(
     list(plot_theme(plot1)),
-    list(5),
+    list(8),
     list(title1),
     list(caption1)))
   
