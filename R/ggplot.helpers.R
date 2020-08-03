@@ -58,7 +58,10 @@ my.plot_legend = list(
                                  "C",
                                  "C2",
                                  "C3"),
-                      labels = c("susceptible","exposed","R0-1","R0-2",
+                      labels = c("susceptible",
+                                 "exposed",
+                                 "R0-1",
+                                 "R0-2",
                                  "I vs S (SEIRS)",
                                  "Scenario 1",
                                  "Scenario 2",
@@ -66,7 +69,7 @@ my.plot_legend = list(
                                  "first inter-epidemic interval",
                                  "I vs S (SIR)","infected (SIR)"),
                       values = palette),
-  scale_colour_manual("BURDEN", 
+  scale_colour_manual("CUMULATIVE BURDEN", 
                       breaks = c("S", "E", "I", "R",
                                  "C1",
                                  "MD",
@@ -75,7 +78,9 @@ my.plot_legend = list(
                                  "C",
                                  "C2",
                                  "C3"),
-                      labels = c("susceptible","exposed","R0-1","R0-2",
+                      labels = c("susceptible","exposed",
+                                 "R0-1",
+                                 "R0-2",
                                  "I vs S (SEIRS)",
                                  "Scenario 1",
                                  "Scenario 2",
@@ -84,6 +89,7 @@ my.plot_legend = list(
                                  "I vs S (SIR)","infected (SIR)"),
                       values = palette)
 )
+
 my.plot_legend2 = list(
   scale_colour_manual("GROUP", 
                       breaks = c("M",
@@ -111,8 +117,9 @@ axis_spacing = function(min=0,max=1,default=0.2) {
   return(spacing)
 }
 
-my.plot_axis = function(xlab="time (years)",
-                        ylab="infected fraction (%)",
+my.plot_axis = function(xlab      = "time (years)",
+                        ylab      = "infected fraction, I (%)",
+                        yseclab   = "normalized cumulative burden, B (%)",
                         xmin      = 0, xmax  = NULL,
                         ymin      = 0, ymax  = NULL,
                         xlog10min = NULL,
@@ -140,7 +147,7 @@ my.plot_axis = function(xlab="time (years)",
 
   # secondary y axis
   if(ysec) {
-    opt = append(opt,scale_y_continuous(ylab,lim=c(ymin,ymax),breaks=seq(ymin,ymax,by=by),labels=yfun,sec.axis=sec_axis(~ 100*./ymax,name="cumulative burden (%)")))
+    opt = append(opt,scale_y_continuous(ylab,lim=c(ymin,ymax),breaks=seq(ymin,ymax,by=by),labels=yfun,sec.axis=sec_axis(~ 100*./ymax,name=yseclab)))
   } else {
     opt = append(opt,scale_y_continuous(ylab,labels=yfun))
   }

@@ -76,10 +76,11 @@ R0M_default          = 1.5
 R0_min               = 1.1
 R0_max               = 5
 R0_step              = 0.1
-R0_A1   = 1.5
-R0_A2   = 2.5
-R0_Amax = 4
+R0_A1    = 1.5
+R0_A2    = 2.5
+R0_Amax  = 4
 R0_step2 = 0.2
+R0_step4 = 0.25
 # Latent period max and default. Slider step is 1.
 lp_max               = 28
 lp_default           = 7
@@ -98,7 +99,7 @@ le_default           = 76
 le_step              = 1
 # Alpha
 al_min               = 0
-al_max               = 1000
+al_max               = 28
 al_default           = 0
 al_step              = 1
 #
@@ -113,11 +114,12 @@ tmax_max             = 10
 tmax_default         = 4
 tmax_step            = 0.1
 # flu 
-tflu_start    = 304
-tflu_duration = 122
+tflu_duration = 2*(31 + 30)
+tflu_start    = 365 - tflu_duration/2
+
 # vaccination plot
-p3_min = 0
-p3_max = 0.9
+p3_min  = 0
+p3_max  = 1
 p3_step = 0.1
 # do timings
 do_timing            = FALSE

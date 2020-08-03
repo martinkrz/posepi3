@@ -12,7 +12,7 @@ table = function(rows,class="normal",title=NULL) {
   cat("</table></div>")
 }
 
-varfmt = function(name=NULL,value=NULL,prec=1,percent=0,comma=0,units="") {
+varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units="") {
   trailing = ""
   if(is.null(name)) {
     fmtstr = sprintf("%%.%df",prec)
@@ -25,7 +25,10 @@ varfmt = function(name=NULL,value=NULL,prec=1,percent=0,comma=0,units="") {
     if(percent) {
       value = 100 * value
     }
-    str    = sprintf(fmtstr,value)
+    str   = sprintf(fmtstr,value)
+    if(paren) {    
+      str = paste("(",str,")",sep="")
+    } 
     return(str)
   }
   rx = str_match_all(name,"^(.+)([.,])$")
@@ -177,7 +180,10 @@ varfmt = function(name=NULL,value=NULL,prec=1,percent=0,comma=0,units="") {
   if(trailing != "") {
     str = paste(str,trailing,sep="")
   }
-  str = str_replace_all(str, "-", "&ndash;")
+  str = str_replace_all(str, "-", "&ndash;")  
+  if(paren) {    
+    str = paste("(",str,")",sep="")
+  }
   return(str)
 }
 
@@ -203,5 +209,12 @@ makerows = function(items) {
     rows = rbind(rows,data.frame(name=varfmt(items[i]),value=items[i+1]))
   }
   return(rows)
+}
+
+select_int = function(x) {
+  return(x[ abs(x-round(x) ) < 1e-6])
+}
+is_int = function(x) {
+  return(abs(x-round(x)) < 1e-6)
 }
 

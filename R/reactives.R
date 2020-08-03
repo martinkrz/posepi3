@@ -25,13 +25,12 @@ calculate1 = function(params1a,params1b,params1c,params1d) {
       peaks  = rbind(peaks,find_peaks(seirs(p)))
     }
   }
-  peaks = peaks %>% arrange(i,R0)
-  t1 = Sys.time()
-  report_timing(t0,t1)
+  peaks = peaks %>% arrange(i,R0)  
+  report_timing(t0,"calculate1")
   return(list(out,peaks))
 }
 
-# Panel 2: phase plane
+# Panel 2: EVPI
 calculate2 = function(params2a,params2b,params2c,params2d) {
   t0  = Sys.time()
   R0_max = 4 + (params2a$R0 > 4)
@@ -60,17 +59,17 @@ calculate2 = function(params2a,params2b,params2c,params2d) {
       } else if (R0 == params2a$R0 && params$p == pmax) {
         a = "A2"
       }
-      this        = data.frame(B=B,R0=R0,p=params$p,id=params$id,pstr=plevel[i],m=models[i],a=a)
+      this        = data.frame(B=B,R0=R0,tmax=params$tmax,p=params$p,id=params$id,pstr=plevel[i],m=models[i],a=a)
       #print(this,i)
       out         = rbind(out,this)
     }
     i = i + 1
-  }
-  t1 = Sys.time()
-  report_timing(t0,t1)
+  }  
+  report_timing(t0,"calculate2")
   return(list(out))
 }
 
+# vaccination
 calculate3 = function(params3) {
   t0 = Sys.time()
   out = data.frame()
@@ -79,9 +78,8 @@ calculate3 = function(params3) {
     params$p = p/365
     seirs1   = seirs(params,steps=sir_system_steps) 
     out      = rbind(out,seirs1)
-  }
-  t1 = Sys.time()
-  report_timing(t0,t1)
+  }  
+  report_timing(t0,"calculate3")
   return(out)
 }
 
@@ -92,14 +90,13 @@ calculate4 = function(paramsa,paramsb,paramsc,paramsd) {
   R0max = paramsa$R0
   idmin = paramsa$id
   idmax = paramsc$id
-  for(id in seq(idmin/365,idmax/365,by=0.25)) {    
+  for(id in seq(idmin/365,idmax/365,by=R0_step4)) {    
     for(R0 in sort(unique(c(R0min,R0max,seq(R0min,R0max,by=R0_step2))))) {      
       p   = get_params(R0, paramsa$ip, paramsa$lp, id, paramsa$le/365, paramsa$al, paramsa$p*365, paramsa$tmax/365)
       df  = seirs(p)
       out = rbind(out,df[nrow(df),])
     }
-  }    
-  t1 = Sys.time()
-  report_timing(t0,t1)
+  }      
+  report_timing(t0,"calculate4")  
   return(out)
 }

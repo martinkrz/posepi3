@@ -9,43 +9,19 @@ output$text4intro = renderPrint({
   params = paramsa
 
   df   = df4()
+  Bmax = max(df$B)
+  tmax = max(df$time)
   
-  table(title="SEIRS parameters 2",class="t2",rows=makerows(c(    
-    "R0",varfmt(value=params$R0,prec=1),
-    "beta",varfmt(value=params$beta,prec=3,units="/day"),
-    "gamma",varfmt(value=params$gamma,prec=3,units="/day"),
-    "sigma",varfmt(value=params$sigma,prec=3,units="/day"),
-    "omega",varfmt(value=365*params$omega,prec=3,units="/year"),
-    "mu",varfmt(value=365*params$mu,prec=3,units="/year"),
-    "alpha",varfmt(value=params$alpha,prec=3,units="/day"),
-    #"T_E",varfmt(value=params$period/365,prec=2,units="years"),
-    #"Sinf",varfmt(value=params$stars$S,prec=1,percent=1),
-    #"Einf",varfmt(value=params$stars$E,prec=1,percent=1),
-    #"Iinf",varfmt(value=params$stars$I,prec=1,percent=1),
-    #"Rinf",varfmt(value=params$stars$R,prec=1,percent=1),
-    #"A",varfmt(value=params$A/365,prec=1,units="years"),
-    #"CFR",varfmt(value=params$cfr,prec=2,percent=1),
-    "p",varfmt(value=params$p,prec=0,percent=1)
-    #"pcrit",varfmt(value=params$R0,prec=0,percent=1)
-  )))
-  table(title="SEIRS parameters 1",class="t1",rows=makerows(c(    
-                                                     "R0",varfmt(value=params$R0,prec=1),
-                                                     "beta",varfmt(value=params$beta,prec=3,units="/day"),
-                                                     "gamma",varfmt(value=params$gamma,prec=3,units="/day"),
-                                                     "sigma",varfmt(value=params$sigma,prec=3,units="/day"),
-                                                     "omega",varfmt(value=365*params$omega,prec=3,units="/year"),
-                                                     "mu",varfmt(value=365*params$mu,prec=3,units="/year"),
-                                                     "alpha",varfmt(value=params$alpha,prec=3,units="/day"),
-                                                     #"T_E",varfmt(value=params$period/365,prec=2,units="years"),
-                                                     #"Sinf",varfmt(value=params$stars$S,prec=1,percent=1),
-                                                     #"Einf",varfmt(value=params$stars$E,prec=1,percent=1),
-                                                     #"Iinf",varfmt(value=params$stars$I,prec=1,percent=1),
-                                                     #"Rinf",varfmt(value=params$stars$R,prec=1,percent=1),
-                                                     #"A",varfmt(value=params$A/365,prec=1,units="years"),
-                                                     #"CFR",varfmt(value=params$cfr,prec=2,percent=1),
-                                                     "p",varfmt(value=params$p,prec=0,percent=1)
-                                                     #"pcrit",varfmt(value=params$pc,prec=0,percent=1)
-                                                     
+  table(title="SEIRS parameters",rows=makerows(c(
+    "R0",paste(varfmt(value=paramsb$R0,prec=1),varfmt(value=paramsa$R0,prec=1),sep="&ndash;"),
+    "omega",paste(varfmt(value=365*paramsa$omega,prec=2),varfmt(value=365*paramsc$omega,prec=2,units="/year"),sep="&ndash;"),
+    "beta",paste(varfmt(value=paramsb$beta,prec=2),varfmt(value=paramsa$beta,prec=2,units="/day"),sep="&ndash;"),
+    "gamma",varfmt(value=paramsa$gamma,prec=2,units="/day"),
+    "sigma",varfmt(value=paramsa$sigma,prec=2,units="/day"),
+    "mu",varfmt(value=365*paramsa$mu,prec=3,units="/year"),
+    "alpha",varfmt(value=paramsa$alpha,prec=3,units="/day"),
+    "p",varfmt(value=365*paramsa$p,prec=0,percent=1),
+    "B<sub>max</sub>",sprintf("%s at %s",varfmt(value=Bmax,prec=2),varfmt(value=tmax/365,prec=1,units="years"))    
   )))
 
   cat(paste("<p>..."))

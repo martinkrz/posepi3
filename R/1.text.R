@@ -10,6 +10,7 @@ output$text1intro = renderPrint({
 
   out   = data[[1]]
   peaks = data[[2]]
+
   df1a = out %>% filter(R0==params1a$R0 & id==params1a$id) # R0max idmin
   df1b = out %>% filter(R0==params1b$R0 & id==params1b$id) # R0min idmin
   df2a = out %>% filter(R0==params1c$R0 & id==params1c$id) # R0max idmax
@@ -28,13 +29,6 @@ output$text1intro = renderPrint({
     "alpha",varfmt(value=params$alpha,prec=3,units="/day"),
     "p",varfmt(value=365*params$p,prec=0,percent=1),
     "B<sub>max</sub>",sprintf("%s at %s",varfmt(value=Bmax,prec=2),varfmt(value=tmax/365,prec=1,units="years"))
-    #"T_E",varfmt(value=params$period/365,prec=2,units="years"),
-    #"Sinf",varfmt(value=params$stars$S,prec=1,percent=1),
-    #"Einf",varfmt(value=params$stars$E,prec=1,percent=1),
-    #"Iinf",varfmt(value=params$stars$I,prec=1,percent=1),
-    #"Rinf",varfmt(value=params$stars$R,prec=1,percent=1),
-    #"A",varfmt(value=params$A/365,prec=1,units="years"),
-    #"CFR",varfmt(value=params$cfr,prec=2,percent=1),  
   )))
   
   cat(paste("<p>These interactive figures show ...")) #predictions from the SEIRS model (see Equations tab) change as a function of parameters such infectious period ",varfmt("(1/gamma),"),"basic reproduction number",varfmt("(R0),"),"latent period",varfmt("(1/sigma),"),"immunity duration",varfmt("(1/omega),"),"life expectancy",varfmt("(1/mu),"),"death onset",varfmt("(1/alpha)"),"and vaccination level",varfmt("p."),sep=" ")) 

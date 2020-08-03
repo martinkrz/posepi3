@@ -62,9 +62,10 @@ server = function(input, output, session) {
   df4 = reactive(calculate4(params4a(),params4b(),params4c(),params4d())) %>% throttle(1000)
   p4  = reactive(    plots4(params4a(),params4b(),params4c(),params4d())) %>% throttle(1000)
   
-  report_timing = function(t0,t1) {
+  report_timing = function(t0,msg="timing") {
+    t1 = Sys.time()
     if(do_timing) {
-      print(sprintf("%.3f seconds",t1-t0))
+      print(sprintf("%s %.3f seconds",msg,t1-t0))
     }
   }
   
