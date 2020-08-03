@@ -35,18 +35,19 @@ calculate2 = function(params2a,params2b,params2c,params2d) {
   t0  = Sys.time()
   R0_max = 4 + (params2a$R0 > 4)
   out    = data.frame()
-  params2a0   = params2a
-  params2a0$p = 0
-  params2c0   = params2c
-  params2c0$p = 0
+  #params2a0   = params2a
+  #params2a0$p = 0
+  #params2c0   = params2c
+  #params2c0$p = 0
   pmin  = min(params2a$p,params2b$p,params2c$p,params2d$p)
   pmax  = max(params2a$p,params2b$p,params2c$p,params2d$p)
   idmin = min(params2a$id,params2b$id,params2c$id,params2d$id)
   idmax = max(params2a$id,params2b$id,params2c$id,params2d$id)
-  models  = c("M1","M1","M1","M2","M2","M2")
-  plevel  = c("p1","p3","p2","p1","p3","p2")
+  models  = c("M1","M1","M2","M2")
+  plevel  = c("p3","p2","p3","p2")
   i       = 1
-  for(p in list(params2a0,params2a,params2b,params2c0,params2c,params2d)) {
+  #for(p in list(params2a0,params2a,params2b,params2c0,params2c,params2d)) {
+  for(p in list(params2a,params2b,params2c,params2d)) {
     params      = p
     for(R0 in sort(unique(c(params2a$R0,params2b$R0,R0_max,seq(R0_min,R0_max,by=R0_step2))))) {
       params$R0   = R0

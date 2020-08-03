@@ -92,7 +92,7 @@ plots2 = function(params2a,params2b,params2c,params2d) {
     varfmt("t",tmax/365,prec=1,units="years"),
     varfmt(name="1/omega",value=params2a$id/365,prec=2,units="years"),
     varfmt(name="R0",value=max(df1$R0),prec=1))
-  caption1 = paste("The effect of two management actions A1",sprintf("(%s)",str0),"and A2",sprintf("(%s)",str1),"on the cumulative disease burden over",varfmt(value=tmax/365,prec=1,units="years"),"of two immunity duration models M1 ",sprintf("(%s)",str2),"and M2",sprintf("(%s)",str3),"for an outbreak with",param_text,"For each model the burden without vaccination is also shown.")
+  caption1 = paste("The effect of two management actions A1",sprintf("(%s)",str0),"and A2",sprintf("(%s)",str1),"on the cumulative disease burden over",varfmt(value=tmax/365,prec=1,units="years"),"of two immunity duration models M1 ",sprintf("(%s)",str2),"and M2",sprintf("(%s)",str3),"for an outbreak with",param_text)
     caption1 = paste(caption1,captionb,sir_caption(tmax,params2a$p))
 
   report_timing(t0,"plot2")
