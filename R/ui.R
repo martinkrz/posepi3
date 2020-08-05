@@ -70,10 +70,10 @@ ui = fluidPage( theme=("css/style.css"),
                                                 #div(htmlOutput("text1a"),class="copy copy1"),
                                                 div(
                                                   div(htmlOutput("title1a"),class="title"),
-                                                  div(plotOutput("plot1a",height=300,width="auto"),class="plot"),
+                                                  div(plotOutput("plot1a",height=400,width="auto"),class="plot"),
                                                   div(htmlOutput("caption1a"),class="caption caption1"),
                                                   div(htmlOutput("title1b"),class="title"),
-                                                  div(plotOutput("plot1b",height=300,width="auto"),class="plot"),
+                                                  div(plotOutput("plot1b",height=400,width="auto"),class="plot"),
                                                   div(htmlOutput("caption1b"),class="caption caption1"),
                                                   class="plotbox")
                                           ),
@@ -273,11 +273,14 @@ ui = fluidPage( theme=("css/style.css"),
                                       ),
                                       column(8,id="main2",
                                                 div(HTML("Expected value of perfect information"),class="paneltitle"),
-                                                div(htmlOutput("text2intro"),class="copy copy2"),
-                                                div(
+                                                div(htmlOutput("text2intro"),class="copy copy2"),                                                
+                                                div(                                                                                                                                                      
                                                   div(htmlOutput("title2a"),class="title"),
                                                   div(plotOutput("plot2a",height=500,width="auto"),class="plot"),
                                                   div(htmlOutput("caption2a"),class="caption caption2"),
+                                                  div(htmlOutput("title2b"),class="title"),
+                                                  div(htmlOutput("evpi"),class="copy"),
+                                                  div(htmlOutput("caption2b"),class="caption caption2"),
                                                   class="plotbox")
                                       )
                                     )),

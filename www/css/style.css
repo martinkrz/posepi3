@@ -167,19 +167,80 @@ div.parameters {
 	border-radius: 4px;
 }
 
-div.parameters div {
+div.tabletitle {
 	margin:  0;
 	padding: 0;
-	margin-bottom: 0.5em;
+	margin-bottom:  0.5em;
 	padding-bottom: 0.25em;
 	font-weight: bold;
-	text-align: center;
-	border-bottom: 1px solid #ccc;
-	font-size: 90%;
+	text-align:  center;
+	border-bottom: 1px solid #ccc;	
 }
 
 table {
 
+}
+
+table.evpi {
+	width: 100%;
+	text-align:center;
+}
+
+table.evpi td {
+	margin: 0.2em 0.5em;
+	padding: 0.2em 0.5em;
+	/*border: 1px solid red;*/
+}
+
+.right {
+	text-align: right;
+}
+.bline {
+	border-bottom: 1px solid #ccc;
+}
+.rline {
+	border-right: 1px solid #ccc;
+}
+.caps {
+	text-transform: uppercase;
+}
+.bold {
+	font-weight: bold;
+}
+.outline {
+	border-radius: 3px;
+	margin: 2px;
+	padding: 1px 3px;
+	border: 1px solid #ccc;
+}
+.subtle {
+	opacity: 0.5;
+	margin-right: 0.25em;
+}
+.params {
+	color: #29abe2;
+	font-size: 90%;
+}
+.a1, .a2, .m1, .m2 {
+	/*font-size:     90%;*/
+	/*font-weight:   bold;*/
+	border-radius: 3px;
+	margin:        2px;
+	padding:       1px 3px;
+}
+.a1 {
+	color: white;
+	background: #8cc63f;
+}
+.a2 {
+	color: white;
+	background: #006837;
+}
+.m1 {
+	background: rgba(199,178,153,0.3);
+}
+.m2 {
+	background: rgba(255,255,0,0.3);
 }
 
 .t1 {
@@ -204,15 +265,15 @@ color: #6eccdc !important;
 	margin-bottom: 1em;
 }
 
-table tr {
+table.param tr {
 	padding: 10px 0;
 }
-table tr td:first-child {
+table.param tr td:first-child {
 	color: #666;
 	padding-right: 10px;
 	text-align: right;
 }
-table tr td:first-child td {
+table.param tr td:first-child td {
 	text-align:left;
 }
 

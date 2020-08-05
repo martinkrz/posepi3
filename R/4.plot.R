@@ -65,7 +65,7 @@ plots4 = function(paramsa,paramsb,paramsc,paramsd) {
     varfmt(name="1/omega",value=paramsa$id/365,prec=1,units="years"),
     varfmt(name="R0",value=paramsa$R0,prec=1))
 
-  caption1 = paste("The normalized cumulative disease burden, <i>B</i>, over the first",varfmt("tmax",tmax/365,prec=1,units="years"),"of outbreak scenarios with",param_text,captionb,sir_caption(tmax,params$p))
+  caption1 = paste("The normalized cumulative disease burden, <i>B</i>, over the first",varfmt("tmax",tmax/365,prec=1,units="years"),"of outbreak scenarios with",param_text,captionb,sir_caption(tmax,paramsa$p))
   
   report_timing(t0,"plot4")
   

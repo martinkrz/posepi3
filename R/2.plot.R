@@ -55,7 +55,8 @@ plots2 = function(params2a,params2b,params2c,params2d) {
   str3 = sprintf("1/<i>&omega;</i> = %.2f years",params2c$id/365)
   
   title1 = sprintf("Effect of management actions A1 (%s) and A2 (%s) on the cumulative disease burden under two immunity duration models M1 (%s) and M2 (%s).",str0,str1,str2,str3)
-  
+  title2 = sprintf("Calculation of the expected value of perfect information (EVPI) for two management actions A1 (%s) and A2 (%s) on the cumulative disease burden under two immunity duration models M1 (%s) and M2 (%s).",str0,str1,str2,str3)
+
   plot1 = plot1 + scale_fill_manual("MODEL", 
                       breaks = c("M1","M2"),                 
                       labels = c("M1","M2"),                                 
@@ -94,13 +95,15 @@ plots2 = function(params2a,params2b,params2c,params2d) {
     varfmt(name="R0",value=max(df1$R0),prec=1))
   caption1 = paste("The effect of two management actions A1",sprintf("(%s)",str0),"and A2",sprintf("(%s)",str1),"on the cumulative disease burden over",varfmt(value=tmax/365,prec=1,units="years"),"of two immunity duration models M1 ",sprintf("(%s)",str2),"and M2",sprintf("(%s)",str3),"for an outbreak with",param_text)
     caption1 = paste(caption1,captionb,sir_caption(tmax,params2a$p))
+  caption2 = paste("The expected value of perfect information (EVPI) for two management actions A1",sprintf("(%s)",str0),"and A2",sprintf("(%s)",str1),"on the cumulative disease burden over",varfmt(value=tmax/365,prec=1,units="years"),"of two immunity duration models M1 ",sprintf("(%s)",str2),"and M2",sprintf("(%s)",str3),"for an outbreak with",param_text)
+    caption1 = paste(caption1,captionb,sir_caption(tmax,params2a$p))
 
   report_timing(t0,"plot2")
 
   return(list(
     list(plot_theme(plot1)),
-    list(8),
-    list(title1),
-    list(caption1)))
+    list(8,9),
+    list(title1,title2),
+    list(caption1,caption2)))
   
 }

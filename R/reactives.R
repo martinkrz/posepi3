@@ -60,7 +60,7 @@ calculate2 = function(params2a,params2b,params2c,params2d) {
       } else if (R0 == params2a$R0 && params$p == pmax) {
         a = "A2"
       }
-      this        = data.frame(B=B,R0=R0,tmax=params$tmax,p=params$p,id=params$id,pstr=plevel[i],m=models[i],a=a)
+      this        = data.frame(B=B,R0=R0,beta=params$beta,tmax=params$tmax,p=params$p,id=params$id,pstr=plevel[i],m=models[i],a=a)
       #print(this,i)
       out         = rbind(out,this)
     }

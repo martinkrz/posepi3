@@ -1,10 +1,68 @@
 figure_title = function(index,title) {
   sprintf("<p class=fignumber>Figure %d.</p><p>%s</p>",index,title)
 }
+
+evpi_table = function(models,actionsR0,actionsp,matrix,title) {
+
+  k    = 100
+  fmt  = "%.1f%%"
+  avgs = colMeans(matrix)
+  opts = apply(matrix,1,min)     
+
+  cat("<div class=parameters style='float:none;width:100%;'>")
+  cat(paste(sprintf("<div class=tabletitle>%s</div>",title)))
+  
+  cat("<table class=evpi>")
+  cat("<tr>")
+  cat("<td></td>")
+  cat("<td></td>")
+  cat("<td class='bline' colspan=2><span class='caps bold outline'>action</span><br>","<span class=params><i>R</i><sub>0</sub>, <i>p</i></span>","</td>")
+  cat("<td></td>")
+  cat("</tr>")
+
+  cat("<tr>")
+  cat("<td></td>")
+  cat("<td></td>")
+  cat(paste("<td>","<span class=a1>A1</span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[1],actionsp[1]),"</span>","</td>",sep=""))
+  cat(paste("<td>","<span class=a2>A2</span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[2],actionsp[2]),"</span>","</td>",sep=""))
+  cat("<td>optimum</td>")
+  cat("</tr>")
+  
+  cat("<tr>")
+  cat("<td rowspan=2 class='rline right'><span class='caps bold outline'>MODEL</span> <span class=params>1/&omega;</span></td>")
+  cat(paste("<td class=right>","<span class=m1>M1</span>"," <span class=params>",sprintf("%.2f",models[1]),"</span>","</td>",sep=""))
+  cat(paste("<td class=m1>","<span class=subtle>B<sub>11</sub></span>",sprintf(fmt,k*matrix[1,1]),"</td>",sep=""))
+  cat(paste("<td class=m1>","<span class=subtle>B<sub>12</sub></span>",sprintf(fmt,k*matrix[1,2]),"</td>",sep=""))
+  cat(paste("<td>",sprintf(fmt,k*opts[1]),"</td>"))
+  cat("</tr>")
+
+  cat("<tr>")
+  cat(paste("<td class=right>","<span class=m2>M2</span>"," <span class=params>",sprintf("%.2f",models[2]),"</span>","</td>",sep=""))
+  cat(paste("<td class=m2>","<span class=subtle>B<sub>21</sub></span>",sprintf(fmt,k*matrix[2,1]),"</td>"))
+  cat(paste("<td class=m2>","<span class=subtle>B<sub>22</sub></span>",sprintf(fmt,k*matrix[2,2]),"</td>"))
+  cat(paste("<td>",sprintf(fmt,k*opts[2]),"</td>"))
+  cat("</tr>")
+
+  cat("<tr>")
+  cat("<td></td>")
+  cat(paste("<td class=right>average</td>"))
+  cat(paste("<td>",sprintf(fmt,k*avgs[1]),"</td>"))
+  cat(paste("<td>",sprintf(fmt,k*avgs[2]),"</td>"))
+  cat(paste("<td>",sprintf(fmt,k*mean(opts)),"</td>"))
+  cat("</tr>")
+
+  cat("<tr>")
+  cat(paste("<td colspan=4 class=right>EVPI</td>"))
+  cat(paste("<td class=bold>",sprintf(fmt,k*(min(avgs)-mean(opts)),"</td>")))
+  cat("</tr>")
+
+  cat("</table></div>")  
+}
+
 table = function(rows,class="normal",title=NULL) {
   cat("<div class=parameters>")
-  cat(paste(sprintf("<div class=%s>%s</div>",class,title)))
-  cat("<table>")
+  cat(paste(sprintf("<div class=tabletitle>%s</div>",title)))
+  cat("<table class=param>")
   for(i in 1:nrow(rows)) {
     row = rows[i,]
     cat(paste("<tr><td>",row$name,"</td><td>",row$value,"</td></tr>",sep=""))
@@ -37,40 +95,14 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
     trailing = rx[[1]][[3]]
   }
   
-  # italicize model parameters
-  name = str_replace_all(name, "\\b(alpha|beta|gamma|sigma|omega|mu)\\b", function(x){sprintf("<i>&%s;</i>",x)})
-  # endemic equilibria e.g. Sinf, Rinf, etc
-  name = str_replace_all(name, "\\b(.inf)\\b", function(x){sprintf("<i>%s</i>(∞)",str_remove(x,"inf"))})
-  # any function
-  name = str_replace_all(name, "(.\\(t\\))", function(x){sprintf("<i>%s</i>(t)",str_remove(x,"\\(t\\)"))})
-  # stars,
-  name = str_replace_all(name, "\\b(.star)\\b", function(x){sprintf("<i>%s</i><sup>*</sup>",str_remove(x,"star"))})
-  # initial values, e.g. Szero
-  name = str_replace_all(name, "\\b(.zero)", function(x){sprintf("<i>%s</i>(0)",str_remove(x,"zero"))})
-  # R0
-  name = str_replace_all(name, "\\bR0\\b", function(x){sprintf("<i>R</i><sub>0</sub>",x)})
-  # min,max subscripts
-  name = str_replace_all(name, "(min|max)\\b", function(x){sprintf("<sub>%s</sub>",x)})
-  # vaccination                         
-  name = str_replace_all(name, "pcrit", function(x){sprintf("<i>p</i><sub>c</sub>",str_remove(x,"crit"))})
-  # vaccination                         
-  name = str_replace_all(name, "\\bp\\b", function(x){sprintf("<i>p</i>")})
-  # vaccination                         
-  name = str_replace_all(name, "\\bpmu\\b", function(x){sprintf("<i>p&mu;</i>")})
-  # time                         
-  name = str_replace_all(name, "\\b(B|T|t|A)", function(x){sprintf("<i>%s</i>",x)})
-  # time                         
-  name = str_replace_all(name, "_E", "<sub>E</sub>")
-  # time                         
-  name = str_replace_all(name, "\\b(inf)\\b", "∞")
-  
+ 
   if(name == "ip") {
     name    = HTML("<i>ip</i>")
     prec    = 0
     units   = "days"
   } else if (name == "R0") {
     #name    = HTML("<i>R</i><sub>0</sub>")
-    prec    = 1
+    prec    = 2
   } else if (name == "S(0)") {
     #name    = HTML("<i>S</i>(0)")
   } else if (name == "I(0)") {
@@ -91,11 +123,15 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
     percent = 1
   } else if (name == "t") {
     name    = HTML("<i>t</i>")
-    prec    = 1
-    units   = "days"
+    prec    = 2
+    units   = "years"
   } else if (name == "C") {
     name    = HTML("<i>C</i>")
     prec    = 0
+    percent = 1
+  } else if (name == "I") {
+    name    = HTML("<i>I</i>")
+    prec    = 1
     percent = 1
   } else if (name == "t1") {
     name    = HTML("<i>t</i><sub>1</sub>")
@@ -122,11 +158,7 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
   } else if (name == "tmax") {
     name    = HTML("<i>t</i><sub>max</sub>")
     prec    = 1
-    units   = "days"
-  } else if (name == "tmax") {
-    name    = HTML("<i>t</i><sub>max</sub>")
-    prec    = 1
-    units   = "days"
+    units   = "years"  
   } else if (name == "Stmax") {
     name    = HTML("<i>S</i>(<i>t</i><sub>max</sub>)")
     prec    = 1
@@ -154,6 +186,33 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
   } else if (name == "mu") {
     #name = HTML("<i>&mu;</i>")
   }
+
+    # italicize model parameters
+  name = str_replace_all(name, "\\b(alpha|beta|gamma|sigma|omega|mu)\\b", function(x){sprintf("<i>&%s;</i>",x)})
+  # endemic equilibria e.g. Sinf, Rinf, etc
+  name = str_replace_all(name, "\\b(.inf)\\b", function(x){sprintf("<i>%s</i>(∞)",str_remove(x,"inf"))})
+  # any function
+  name = str_replace_all(name, "(.\\(t\\))", function(x){sprintf("<i>%s</i>(t)",str_remove(x,"\\(t\\)"))})
+  # stars,
+  name = str_replace_all(name, "\\b(.star)\\b", function(x){sprintf("<i>%s</i><sup>*</sup>",str_remove(x,"star"))})
+  # initial values, e.g. Szero
+  name = str_replace_all(name, "\\b(.zero)", function(x){sprintf("<i>%s</i>(0)",str_remove(x,"zero"))})
+  # R0
+  name = str_replace_all(name, "\\bR0\\b", function(x){sprintf("<i>R</i><sub>0</sub>",x)})
+  # min,max subscripts
+  name = str_replace_all(name, "(min|max|avg)\\b", function(x){sprintf("<sub>%s</sub>",x)})
+  # vaccination                         
+  name = str_replace_all(name, "pcrit", function(x){sprintf("<i>p</i><sub>c</sub>",str_remove(x,"crit"))})
+  # vaccination                         
+  name = str_replace_all(name, "\\bp\\b", function(x){sprintf("<i>p</i>")})
+  # vaccination                         
+  name = str_replace_all(name, "\\bpmu\\b", function(x){sprintf("<i>p&mu;</i>")})
+  # time                         
+  name = str_replace_all(name, "\\b(B|T|t|A)", function(x){sprintf("<i>%s</i>",x)})
+  # time                         
+  name = str_replace_all(name, "_E", "<sub>E</sub>")
+  # time                         
+  name = str_replace_all(name, "\\b(inf)\\b", "∞")
 
   if(! is.null(value)) {
     if(comma) {

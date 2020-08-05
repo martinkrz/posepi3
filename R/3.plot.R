@@ -69,19 +69,22 @@ plots3 = function(params) {
                   p3_min*100,p3_max*100,p3_step*100)
 
   title1 = sprintf("Effect of annual vaccination rate, <i>p</i>, on the cumulative disease burden, <i>B</i>, %s",str0)
+  title2 = sprintf("Effect of annual vaccination rate, <i>p</i>, on the phase plane of <i>I</i>(<i>t</i>) vs <i>S</i>(<i>t</i>) %s",str0)
   
   captionb = sprintf("The cumulative burden is normalized to %s at %s.",
     varfmt("Bmax",Bmax,prec=2),
     varfmt("t",tmax/365,prec=1,units="years"))
     
   caption1 = paste("The normalized cumulative disease burden, <i>B</i>, with varying levels of annual vaccination",str1,"over the first",varfmt("tmax",tmax/365,prec=1,units="years"),"of an outbreak with",param_text,captionb,sir_caption(tmax,params$p))
+  caption2 = paste("The normalized cumulative disease burden, <i>B</i>, with varying levels of annual vaccination",str1,"over the first",varfmt("tmax",tmax/365,prec=1,units="years"),"of an outbreak with",param_text,captionb,sir_caption(tmax,params$p))
+  caption2 = paste("The SEIRS model phase plane of",varfmt("I(t)"),"vs",varfmt("S(t)"),"with varying levels of annual vaccination",str1,"over the first",varfmt("tmax",tmax/365,prec=1,units="years"),"of an outbreak with",param_text,captionb,sir_caption(tmax,params$p))
 
   report_timing(t0,"plot3")
   
   return(list(
     list(plot_theme(plot1),plot_theme(plot2)),
     list(6,7),
-    list(title1,title1),
-    list(caption1,caption1)))
+    list(title1,title2),
+    list(caption1,caption2)))
   
 }

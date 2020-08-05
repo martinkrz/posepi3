@@ -5,6 +5,7 @@ server = function(input, output, session) {
   source("R/1.plot.R",local=TRUE)
   source("R/1.text.R",local=TRUE)
   source("R/2.text.R",local=TRUE)
+  source("R/2.evpi.R",local=TRUE)
   source("R/2.plot.R",local=TRUE)
   source("R/3.text.R",local=TRUE)
   source("R/3.plot.R",local=TRUE)

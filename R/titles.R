@@ -58,6 +58,14 @@ output$plot2a = renderPlot({
 output$caption2a = renderPrint({
   cat(paste("<p>", p2()[[4]][[1]], "</p>", sep = ""))
 })
+output$title2b = renderPrint({
+  index = p2()[[2]][[2]]
+  title = p2()[[3]][[2]]
+  cat(figure_title(index, title))
+})
+output$caption2b = renderPrint({
+  cat(paste("<p>", p2()[[4]][[2]], "</p>", sep = ""))
+})
 
 output$title3a = renderPrint({
   index = p3()[[2]][[1]]

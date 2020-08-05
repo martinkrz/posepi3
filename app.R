@@ -58,13 +58,13 @@ palette              = c(S="#333333",
                          p1="#b3b3b3",
                          p2="#8cc63f",
                          p3="#006837")
-debug = TRUE
+debug = FALSE
 # Plot height and line width for trajectories
 plot_line_width      = 1.5
 plot_text_size       = 12
 # Initial value for I(0). S(0) = 1 - sir_init_i - vaccination_fraction and R(0) = vaccination_fraction
 sir_init_i           = 0.001
-sir_system_steps     = 1000
+sir_system_steps     = 500
 sir_system_time_step = 0.01 # last resort default, shouldn't be used
 # Infectious period max and default. Slider step is 1.
 ip_max               = 28
@@ -122,7 +122,7 @@ p3_min  = 0
 p3_max  = 1
 p3_step = 0.1
 # do timings
-do_timing            = FALSE
+do_timing            = TRUE
 
 interpretive_default = FALSE
 captions_default     = FALSE
