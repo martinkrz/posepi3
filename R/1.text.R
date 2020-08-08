@@ -31,7 +31,7 @@ output$text1intro = renderPrint({
     "B<sub>max</sub>",sprintf("%s at %s",varfmt(value=Bmax,prec=2),varfmt(value=tmax/365,prec=2,units="years"))
   )))
   
-  cat(paste("<p>These interactive figures show the impact of parameter uncertainty on two important metrics of an outbreak: infection peaks and cumulative disease burden. We will use a SEIRS model (see Equations tab) and visualize the infection peaks using the trajectory of",varfmt("I(t)"),"and the cumulative disease burden using the total number of cases",varfmt("B(t)"),"from the start of the outbreak.")) 
+  cat(paste("<p>These interactive figures show the impact of parameter uncertainty on two important metrics of an outbreak: infection peaks and cumulative disease burden. We will use a SEIRS model (see Equation tab) and visualize the infection peaks using the trajectory of",varfmt("I(t)"),"and the cumulative disease burden using the total number of cases",varfmt("B(t)"),"from the start of the outbreak.")) 
   cat(paste("<p>We will model a range of",varfmt("R0"),"and",varfmt("1/omega"),"values to reflect uncertainty in the transmissivity and immunity duration of a disease. We highlight each flu season (Nov-Feb) and include the possibility for continuous vaccination at an annual rate",varfmt("p,"),"which can have substantial impact on how the outbreak progresses even if the vaccine is only partially effective."))
   cat(paste("<p>We assume that all other parameters are fixed and accurately estimated. Practically, parameters associated with fast rates are the first to be accurately assessed and those for slow rates, such as loss of immunity rate",varfmt("omega,"),"may take several years to determine."))
   

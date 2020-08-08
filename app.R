@@ -58,7 +58,8 @@ palette              = c(S="#333333",
                          p1="#b3b3b3",
                          p2="#8cc63f",
                          p3="#006837")
-debug = FALSE
+debug     = FALSE
+do_timing = TRUE
 # Plot height and line width for trajectories
 plot_line_width      = 1.5
 plot_text_size       = 12
@@ -79,8 +80,8 @@ R0_step              = 0.1
 R0_A1    = 1.5
 R0_A2    = 2
 R0_Amax  = 4
-R0_step2 = 0.2
-R0_step4 = 0.25
+R0_step2 = 0.1
+R0_step4 = 0.1
 # Latent period max and default. Slider step is 1.
 lp_max               = 28
 lp_default           = 7
@@ -92,6 +93,7 @@ id_max               = 5
 idshort_default      = 1
 idlong_default       = 2
 id_step              = 0.1
+id_step2             = 0.25
 # Life expectancy max and default. Slider step is 1. Units are years.
 le_min               = 10
 le_max               = 100
@@ -122,8 +124,6 @@ p3_min  = 0
 p3_max  = 1
 p3_step = 0.1
 # do timings
-do_timing            = TRUE
-
 interpretive_default = FALSE
 captions_default     = FALSE
 
@@ -132,7 +132,7 @@ if(debug) {
   R0_step2             = 0.5
   interpretive_default = TRUE
   captions_default     = TRUE
-  do_timing = TRUE
+  do_timing            = TRUE
 }
 source("R/format.helpers.R",local=TRUE)
 source("R/ggplot.helpers.R",local=TRUE)

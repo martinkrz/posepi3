@@ -26,6 +26,6 @@ output$text4intro = renderPrint({
 
   cat(paste("<p>The cumulative burden",varfmt("B"),"is an important metric in measuring the extent of an outbreak. It is calculated from the total number of cases (infections) from the start of the outbreak. Here, we will normalize the burden to the scenario with the largest cumulative burden",varfmt("Bmax",Bmax,prec=2),sprintf("(%s, %s).",varfmt("R0",paramsa$R0,prec=2),varfmt("1/omega",paramsa$id/365,prec=2,unit="years"))))  
   cat(paste("<h4>key observations</h4>"))
-  cat(paste("<p>The burden is lower for lower",varfmt("R0"),"and for longer immunity duration. Because both of these parameters have the effect of delaying subsequent peaks, the burden curve increases sharply when peaks come into the time range over which the burden is calculated."))
+  cat(paste("<p>The burden is lower for lower",varfmt("R0"),"and for longer immunity duration. Because both of these parameters have the effect of delaying subsequent peaks, the burden curve increases sharply when peaks come into the time range over which the burden is calculated. "))
   
 })

@@ -7,6 +7,7 @@ read_latex = function(file) {
 eq_seirs = read_latex("latex/seirs.tex")
 eq_param = read_latex("latex/seirs.parameters.tex")
 eq_r0    = read_latex("latex/seirs.r0.tex")
+eq_evpi  = read_latex("latex/evpi.tex")
 
 #eq_equil = read_latex("latex/seirs.equilibrium.tex")
 #eq_age   = read_latex("latex/seirs.age-dependent.tex")
@@ -19,9 +20,10 @@ ui = fluidPage( theme=("css/style.css"),
                 shinyjs::useShinyjs(),
                 htmlOutput("masthead"),
                 navbarPage("Uncertainty and management",id="tabs",
+                  #tabsetPanel(id="tabs",
                            tabPanel(HTML("Uncertainty in 1/<i>&omega;</i> and <i>R</i><sub>0</sub>"),value=1,id=1,
                                     fluidRow(
-                                      column(4,id="sidebar1",
+                                      column(3,id="sidebar1",
                                         div(id="form1",
                                         HTML("<p class='normal grey small'>Uncertainty in <i>R</i><sub>0</sub> and 1/<i>&omega;</i> will be modeled by simulating minimum and maximum values.</p>"),
                                         sliderInput("R01", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"),
@@ -92,9 +94,9 @@ ui = fluidPage( theme=("css/style.css"),
                                       )
                                     )),
                            
-                           tabPanel("Cumulative burden",value=4,id=4,
+                           tabPanel("Cumulative burden",value=2,id=2,
                                     fluidRow(
-                                      column(4,id="sidebar4",
+                                      column(3,id="sidebar4",
                                              #sidebarPanel(                                             
                                              div(id="form4",
                                                  HTML("<p class='normal grey small'>Uncertainty in <i>R</i><sub>0</sub> and 1/<i>&omega;</i> will be modeled by simulating minimum and maximum values.</p>"),
@@ -163,7 +165,7 @@ ui = fluidPage( theme=("css/style.css"),
                            
                            tabPanel("Vaccination",value=3,id=3,
                                     fluidRow(
-                                      column(4,id="sidebar3",
+                                      column(3,id="sidebar3",
                                              #sidebarPanel(
                                              div(id="form3",
                                                  sliderInput("R03", HTML("Basic reproduction number, <i>R</i><sub>0</sub>"), 
@@ -224,9 +226,9 @@ ui = fluidPage( theme=("css/style.css"),
                                       )
                                     )),
                            
-                           tabPanel("EVPI",value=2,id=2,
+                           tabPanel("EVPI",value=4,id=4,
                                     fluidRow(
-                                      column(4,id="form2",
+                                      column(3,id="form2",
                                       #fluidRow(
                                       #  column(6,HTML("<h5 class=t1>Scenario 1</h5>")),
                                       #  column(6,HTML("<h5 class=t2>Scenario 2</h5>"))
@@ -285,34 +287,25 @@ ui = fluidPage( theme=("css/style.css"),
                                       )
                                     )),
                            
-                           tabPanel("Equations",value=4,id=4,
-                                    withMathJax(
-                                      helpText(paste("SEIRS system with continuous vaccination (dot indicates time derivative) $$",eq_seirs,"$$")),
-                                      helpText(paste("Parameters (mean values) $$",eq_param,"$$")),
-                                      helpText("Basic reproduction number $$",eq_r0,"$$")
-                                      #helpText("Endemic mean age of infection $$",eq_endemic_age,"$$"),
-                                      #helpText("Mean infectious period $$G_\\textrm{I} = 1/(\\gamma + \\mu + \\alpha)$$"),
-                                      #helpText(paste("Endemic equilibrium $$",eq_equil,"$$")),
-                                      #p(paste("The inter-epidemic period is calculated from the largest imaginary part of eigenvalues of the Jacobian matrix evaluated at the endemic equilibrium.")),
-                                      #helpText(paste("Jacobian matrix $$",eq_jacobian,"$$")),
-                                      #helpText(paste("Eigenvalue equation and inter-epidemic period $$",eq_eigenvalue,"$$")),
-                                      #helpText("Approximation of inter-epidemic period $$",eq_period,"$$")
-                                      #,helpText(paste("Age-dependent model $$",eq_age,"$$"))
-                                    ),
-                                    
+                           tabPanel("Equations",value=5,id=5,
+                                    p(HTML("SEIRS system with continuous vaccination (dot indicates time derivative)")),
+                                    withMathJax(paste("$$",eq_seirs,"$$")),
+                                    p(HTML("SEIRS Parameters (mean values)")),
+                                    withMathJax(paste("$$",eq_param,"$$")),
+                                    p(HTML("Basic reproduction number")),
+                                    withMathJax(paste("$$",eq_r0,"$$")),
+                                    p(HTML("Expected value of perfect information (EVPI) for the cumulative burden <i>B<sub>ij</sub></i> for model <i>i</i> and action <i>j</i>")),
+                                    withMathJax(paste("$$",eq_evpi,"$$")),                                    
                                     p(paste("Infection trajectories show a numerical solution to the SEIRS equations with",formatC(sir_system_steps,format="f",big.mark=",",digits=0),"time steps and initial parameters",sep=" ")),
                                     withMathJax(
-                                      helpText("$$S(0) = 0.999$$"),
-                                      helpText("$$E(0) = 0.001$$"),
-                                      helpText("$$I(0) = 0$$"),
-                                      helpText("$$R(0) = 0$$"),
-                                      helpText("$$B(0) = 0.001$$"),
-                                      helpText("$$S + E + I + R = N = 1$$")
-                                    ),
-                                    p("where",tags$i("p"),"is the annual vaccination rate and",tags$i("B"),"is the cumulative disease burden.")
+                                      sprintf("$$S(0) = %s$$",1-sir_init_i),
+                                      "$$E(0) = R(0) = 0$$",
+                                      sprintf("$$I(0) = B(0) = %s$$",sir_init_i),
+                                      "$$S + E + I + R = N = 1$$"),
+                                    p(HTML("where <i>B</i> is the cumulative disease burden."))
                           ),
                            
-                           tabPanel("Download & Credits",value=5,id=5,
+                           tabPanel("Download & Credits",value=6,id=6,
                                     mainPanel(
                                       h3("Points of Significance: The SEIRS model for infectious disease dynamics"),
                                       p(HTML("Ottar Bjørnstad<sup>1,2</sup>, Katriona Shea<sup>1</sup>, Martin Krzywinski<sup>3*</sup>, Naomi Altman<sup>4</sup>")),
@@ -342,5 +335,5 @@ ui = fluidPage( theme=("css/style.css"),
                                       width=16
                                       
                                     ))
-                           
+                          # )
                 ))

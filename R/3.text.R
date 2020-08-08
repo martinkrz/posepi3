@@ -6,7 +6,7 @@ output$text3intro = renderPrint({
   df   = df3()
   tmax = params$tmax
   Bmax = max(df$B)  
-    
+      
   table(title="SEIRS parameters",rows=makerows(c(
     "R0",   varfmt(value=params$R0,prec=1),
     "omega",varfmt(value=365*params$omega,prec=2,units="/year"),
