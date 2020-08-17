@@ -22,15 +22,15 @@
 Download [R Studio](http://rstudio.com) and install packages.
 
 ```
-install.packages(c("shiny","deSolve","ggplot2","grid","stringr","tidyverse"))
+install.packages(c("shiny","shinyjs","shinyWidgets","deSolve","ggplot2","stringr","tidyverse"))
 ```
 
 Run the app by loading `app.R` and clicking `Run App`.
 
 ## Shiny app authors
 
-* **Ottar Bjørnstad** | *Code template and tips*
 * **Martin Krzywinski** | *Coding*
+* **Ottar Bjørnstad** | *Code template and tips*
 
 ## Bugs and comments
 
