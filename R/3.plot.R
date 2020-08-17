@@ -19,7 +19,7 @@ plots3 = function(params) {
   plot2 = plot2 + geom_path(data=df %>% filter(p>0),aes(x=S,y=I,group=p,color=round(100*365*p)),size=plot_line_width)# + scale_color_distiller(palette = "Spectral")
 
   plot1 = plot1 + scale_colour_gradient(
-      "annual vaccination rate (%)",
+      "annual vaccination fraction (%)",
       low   = "#006837",
       high  = "#8cc63f",
       space = "Lab",
@@ -30,7 +30,7 @@ plots3 = function(params) {
       labels=c(10,30,50,100)
     )
   plot2 = plot2 + scale_colour_gradient(
-      "annual vaccination rate (%)",
+      "annual vaccination fraction (%)",
       low   = "#006837",
       high  = "#8cc63f",
       space = "Lab",
@@ -68,8 +68,8 @@ plots3 = function(params) {
   str1  = sprintf("(<i>p</i> = %.0f&ndash;%.0f%% in steps of %.0f%%)",
                   p3_min*100,p3_max*100,p3_step*100)
 
-  title1 = sprintf("Effect of annual vaccination rate, <i>p</i>, on the cumulative disease burden, <i>B</i>, %s",str0)
-  title2 = sprintf("Effect of annual vaccination rate, <i>p</i>, on the phase plane of <i>I</i>(<i>t</i>) vs <i>S</i>(<i>t</i>) %s",str0)
+  title1 = sprintf("Effect of annual vaccination fraction, <i>p</i>, on the cumulative disease burden, <i>B</i>, %s",str0)
+  title2 = sprintf("Effect of annual vaccination fraction, <i>p</i>, on the phase plane of <i>I</i>(<i>t</i>) vs <i>S</i>(<i>t</i>) %s",str0)
   
   captionb = sprintf("The cumulative burden is normalized to %s at %s.",
     varfmt("Bmax",Bmax,prec=2),

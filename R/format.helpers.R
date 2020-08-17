@@ -23,21 +23,21 @@ evpi_table = function(models,actionsR0,actionsp,matrix,title) {
   cat("<tr>")
   cat("<td></td>")
   cat("<td></td>")
-  cat(paste("<td>","<span class=a1>A1</span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[1],actionsp[1]),"</span>","</td>",sep=""))
-  cat(paste("<td>","<span class=a2>A2</span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[2],actionsp[2]),"</span>","</td>",sep=""))
+  cat(paste("<td>","<span class=a1>A<sub>1</sub></span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[1],actionsp[1]),"</span>","</td>",sep=""))
+  cat(paste("<td>","<span class=a2>A<sub>2</sub></span>","<br>","<span class=params>",sprintf("%s, %s%%",actionsR0[2],actionsp[2]),"</span>","</td>",sep=""))
   cat("<td>optimum</td>")
   cat("</tr>")
   
   cat("<tr>")
   cat("<td rowspan=2 class='rline right'><span class='caps bold outline'>MODEL</span> <span class=params>1/&omega;</span></td>")
-  cat(paste("<td class=right>","<span class=m1>M1</span>"," <span class=params>",sprintf("%.2f",models[1]),"</span>","</td>",sep=""))
+  cat(paste("<td class=right>","<span class=m1>M<sub>1</sub></span>"," <span class=params>",sprintf("%.2f",models[1]),"</span>","</td>",sep=""))
   cat(paste("<td class=m1>","<span class=subtle>B<sub>11</sub></span>",sprintf(fmt,k*matrix[1,1]),"</td>",sep=""))
   cat(paste("<td class=m1>","<span class=subtle>B<sub>12</sub></span>",sprintf(fmt,k*matrix[1,2]),"</td>",sep=""))
   cat(paste("<td>",sprintf(fmt,k*opts[1]),"</td>"))
   cat("</tr>")
 
   cat("<tr>")
-  cat(paste("<td class=right>","<span class=m2>M2</span>"," <span class=params>",sprintf("%.2f",models[2]),"</span>","</td>",sep=""))
+  cat(paste("<td class=right>","<span class=m2>M<sub>2</sub></span>"," <span class=params>",sprintf("%.2f",models[2]),"</span>","</td>",sep=""))
   cat(paste("<td class=m2>","<span class=subtle>B<sub>21</sub></span>",sprintf(fmt,k*matrix[2,1]),"</td>"))
   cat(paste("<td class=m2>","<span class=subtle>B<sub>22</sub></span>",sprintf(fmt,k*matrix[2,2]),"</td>"))
   cat(paste("<td>",sprintf(fmt,k*opts[2]),"</td>"))
@@ -102,7 +102,7 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
     units   = "days"
   } else if (name == "R0") {
     #name    = HTML("<i>R</i><sub>0</sub>")
-    prec    = 2
+    prec    = 1
   } else if (name == "S(0)") {
     #name    = HTML("<i>S</i>(0)")
   } else if (name == "I(0)") {
@@ -201,6 +201,8 @@ varfmt = function(name=NULL,value=NULL,paren=0,prec=1,percent=0,comma=0,units=""
   name = str_replace_all(name, "\\bR0\\b", function(x){sprintf("<i>R</i><sub>0</sub>",x)})
   # min,max subscripts
   name = str_replace_all(name, "(min|max|avg)\\b", function(x){sprintf("<sub>%s</sub>",x)})
+  # action/model subscripts
+  name = str_replace_all(name, "([MA])([1-9])\\b", "\\1<sub>\\2</sub>")
   # vaccination                         
   name = str_replace_all(name, "pcrit", function(x){sprintf("<i>p</i><sub>c</sub>",str_remove(x,"crit"))})
   # vaccination                         

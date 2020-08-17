@@ -87,13 +87,13 @@ plots1 = function(params1a,params1b,params1c,params1d) { #R0,ip,lp,id,le,alpha=0
 my.plot_legend1a = list(  
   scale_fill_manual("INFECTED FRACTION", 
                       breaks = c("I", "R"),                 
-                      labels = c(paste("R0 =",params1a$R0),
-                                 paste("R0 =",params1b$R0)),                                 
+                      labels = c(sprintf("R0 = %.1f",params1a$R0),
+                                 sprintf("R0 = %.1f",params1b$R0)),                                 
                       values = palette),
    scale_color_manual("CUMULATIVE BURDEN",
                       breaks = c("I", "R"),                 
-                      labels = c(paste("R0 =",params1a$R0),
-                                 paste("R0 =",params1b$R0)),
+                      labels = c(sprintf("R0 = %.1f",params1a$R0),
+                                 sprintf("R0 = %.1f",params1b$R0)),                                 
                       values = palette),
    guides(      
     fill  = guide_legend(order = 1,nrow=2),

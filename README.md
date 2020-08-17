@@ -1,6 +1,6 @@
-# Points of Significance: Uncertainty and the modelling and management of infectious epidemics
+# Points of Significance: Uncertainty and the management of epidemics
 
-##### Katriona Shea<sup>1</sup>, Ottar Bjørnstad<sup>1,2</sup>, Martin Krzywinski<sup>3*</sup>, Naomi Altman<sup>4</sup>
+##### Katriona Shea¹, Ottar Bjørnstad¹², Martin Krzywinski³*, Naomi Altman⁴
 
 1. Department of Biology, The Pennsylvania State University, State College, PA, USA.
 2. Department of Entomology, The Pennsylvania State University, State College, PA, USA.
@@ -30,7 +30,6 @@ Run the app by loading `app.R` and clicking `Run App`.
 ## Shiny app authors
 
 * **Ottar Bjørnstad** | *Code template and tips*
-* **Naomi Altman** | *Code template*
 * **Martin Krzywinski** | *Coding*
 
 ## Bugs and comments
@@ -43,11 +42,9 @@ Run the app by loading `app.R` and clicking `Run App`.
 
 First public release.
 
-### v1.0.0
-
 ## Citation
 
-Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. [Points of Significance: Uncertainty and the modelling and management of infectious epidemics](http://mkweb.bcsgc.ca/points.of.significance) (2020) *Nature Methods* **17**:in press. ([interactive figures](http://shiny.bcgsc.ca/posepi3), [download code](https://martinkrz.github.io/posepi3/))
+Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. [Points of Significance: Uncertainty and the management of epidemics](http://mkweb.bcsgc.ca/points.of.significance) (2020) *Nature Methods* **17** (in press). ([interactive figures](http://shiny.bcgsc.ca/posepi3), [download code](https://martinkrz.github.io/posepi3/))
 
 ## Related Columns
 
