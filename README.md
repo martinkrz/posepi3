@@ -1,13 +1,11 @@
 # Points of Significance: Uncertainty and the management of epidemics
 
-##### Katriona Shea¹, Ottar Bjørnstad¹𝄒², Martin Krzywinski³*, Naomi Altman⁴
+##### Katriona Shea¹, Ottar Bjørnstad¹𝄒², [Martin Krzywinski](mailto:martink@bcgsc.ca)³*, Naomi Altman⁴
 
 1. Department of Biology, The Pennsylvania State University, State College, PA, USA.
 2. Department of Entomology, The Pennsylvania State University, State College, PA, USA.
 3. Canada's Michael Smith Genome Sciences Center, Vancouver, British Columbia, Canada.
 4. Department of Statistics, The Pennsylvania State University, State College, PA, USA.
-
-* martink@bcgsc.ca
 
 [Interactive figures](https://shiny.bcgsc.ca/posepi3/) accompanying the column.
 
