@@ -325,8 +325,8 @@ ui = fluidPage( theme=("css/style.css"),
                                       HTML("<p>17 Aug 2020 v1.0.0 &mdash; initial public release</p>"),
                                       hr(),
                                       h4("Related columns"),
-                                      p(HTML("Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. <a href='https://www.nature.com/articles/s41592-020-0822-z'>Points of Significance: Modelling infectious epidemics.</a> (2020) <i>Nature Methods</i> <b>17</b>:455&ndash;456. (<a href='http://shiny.bcgsc.ca/posepi1'>interactive figures</a>, <a href='https://martinkrz.github.io/posepi1'>download code</a>)")),
-                                      p(HTML("Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. <a href='https://www.nature.com/articles/s41592-020-0856-2'>Points of Significance: The SEIRS model for infectious disease dynamics.</a> (2020) <i>Nature Methods</i> <b>17</b>:557&ndash;558. (<a href='http://shiny.bcgsc.ca/posepi2'>interactive figures</a>, <a href='https://martinkrz.github.io/posepi2'>download code</a>).")),
+                                      p(HTML("Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. <a href='https://www.nature.com/articles/s41592-020-0822-z'>Points of Significance: Modelling infectious epidemics</a>. (2020) <i>Nature Methods</i> <b>17</b>:455&ndash;456. (<a href='http://shiny.bcgsc.ca/posepi1'>interactive figures</a>, <a href='https://martinkrz.github.io/posepi1'>download code</a>)")),
+                                      p(HTML("Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. <a href='https://www.nature.com/articles/s41592-020-0856-2'>Points of Significance: The SEIRS model for infectious disease dynamics</a>. (2020) <i>Nature Methods</i> <b>17</b>:557&ndash;558. (<a href='http://shiny.bcgsc.ca/posepi2'>interactive figures</a>, <a href='https://martinkrz.github.io/posepi2'>download code</a>).")),
                                       
                                       width=16
                                       

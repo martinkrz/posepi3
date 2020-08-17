@@ -1,4 +1,4 @@
-# Points of Significance - Uncertainty and the modelling and management of infectious epidemics
+# Points of Significance - Uncertainty and the management of epidemics
 # Katriona Shea (1), Ottar Bjørnstad (1,2), Martin Krzywinski (3*), Naomi Altman (4)
 #
 # 1. Department of Biology, The Pennsylvania State University, State College, PA, USA.
@@ -9,13 +9,12 @@
 #
 # CITATION
 # Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. 
-# Points of Significance: Uncertainty and the modelling and management of infectious epidemics (2020) Nature Methods 17 (in press).
+# Points of Significance: Uncertainty and the management of epidemics (2020) Nature Methods 17 (in press).
 #
 # DOWNLOAD
 # https://martinkrz.github.io/posepi3
 #
 # REMOTE ACCESS
-#
 # http://shiny.bcgsc.ca/posepi3
 #
 # RUN LOCALLY
@@ -37,6 +36,7 @@ library(shinyWidgets)
 # CHANGELOG
 #
 # 22-07-2020  spawned from posepi3
+# 17-08-2020  v1.0.0 first public release
 
 # CUSTOM SETTINGS
 # The colors of the SEIR groups and some greys (Cn)

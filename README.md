@@ -44,13 +44,13 @@ First public release.
 
 ## Citation
 
-Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. [Points of Significance: Uncertainty and the management of epidemics](http://mkweb.bcsgc.ca/points.of.significance) (2020) *Nature Methods* **17** (in press). ([interactive figures](http://shiny.bcgsc.ca/posepi3), [download code](https://martinkrz.github.io/posepi3/))
+Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. [Points of Significance: Uncertainty and the management of epidemics](http://mkweb.bcsgc.ca/points.of.significance). (2020) *Nature Methods* **17** (in press). ([interactive figures](http://shiny.bcgsc.ca/posepi3), [download code](https://martinkrz.github.io/posepi3/))
 
 ## Related Columns
 
-Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. [Points of Significance: The SEIRS model for infectious disease dynamics](http://www.nature.com/articles/s41592-020-0856-2) (2020) *Nature Methods* **17**:557-558. ([interactive figures](http://shiny.bcgsc.ca/posepi2), [download code](https://martinkrz.github.io/posepi2/))
+Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. [Points of Significance: The SEIRS model for infectious disease dynamics](http://www.nature.com/articles/s41592-020-0856-2). (2020) *Nature Methods* **17**:557-558. ([interactive figures](http://shiny.bcgsc.ca/posepi2), [download code](https://martinkrz.github.io/posepi2/))
 
-Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. [Points of Significance: Modelling infectious epidemics](https://www.nature.com/articles/s41592-020-0822-z) (2020) *Nature Methods* **17**:455-456. ([interactive figures](http://shiny.bcgsc.ca/posepi1), [download code](https://martinkrz.github.io/posepi1/))
+Bjørnstad, O., Shea, K., Krzywinski, M. & Altman, N. [Points of Significance: Modelling infectious epidemics](https://www.nature.com/articles/s41592-020-0822-z). (2020) *Nature Methods* **17**:455-456. ([interactive figures](http://shiny.bcgsc.ca/posepi1), [download code](https://martinkrz.github.io/posepi1/))
 
 ## License
 
