@@ -191,9 +191,10 @@ my.plot_legend1a = list(
     varfmt(name="1/omega",value=params1a$id/365,prec=1,units="years"),
     varfmt(name="R0",value=params1a$R0,prec=1))
   captionp = sprintf("Location of the first and second infection peaks is traced with a black line across the range of %s = %s-%s in steps of 0.25 (hollow points, labels).",varfmt("R0"),varfmt(value=params1b$R0,prec=1),varfmt(value=params1a$R0,prec=1))
+  captionf = sprintf("Grey bars indicate Nov-Feb peak flu season assuming <i>t</i> = 0 is January 1st.")
 
-  caption1 = paste("The SEIRS epidemic peaks and cumulative disease burden over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with",captions,"and",param_text1,captionp)
-  caption2 = paste("The SEIRS epidemic peaks and cumulative disease burden over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with",captionl,"and",param_text2,captionb)
+  caption1 = paste("The SEIRS epidemic peaks and cumulative disease burden over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with",captions,"and",param_text1,captionp,captionf)
+  caption2 = paste("The SEIRS epidemic peaks and cumulative disease burden over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with",captionl,"and",param_text2,captionb,captionf)
 
   caption3 = paste("The SEIRS model phase plane of",varfmt("I(t)"),"vs",varfmt("S(t)"),"over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with with",captions,"and",param_text1)
   caption4 = paste("The SEIRS model phase plane of",varfmt("I(t)"),"vs",varfmt("S(t)"),"over the first",varfmt(name="tmax",value=tmax/365,prec=1,unit="years"),"of an outbreak with with",captionl,"and",param_text2)
