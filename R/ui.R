@@ -318,7 +318,7 @@ ui = fluidPage( theme=("css/style.css"),
                                       
                                       hr(),
                                       h4("Citation"),
-                                      p(HTML("Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. <a href='http://www.nature.com/articles/s41592-020-0856-2'>Points of Significance: Uncertainty and the management of epidemics</a>. (2020) <i>Nature Methods</i> <b>17</b> (in press).")),
+                                      p(HTML("Shea, K., Bjørnstad, O., Krzywinski, M. & Altman, N. Points of Significance: Uncertainty and the management of epidemics. (2020) <i>Nature Methods</i> <b>17</b> (in press).")),
                                       hr(),
                                       h4("Version history"),
                                       HTML("<p>17 Aug 2020 v1.0.0 &mdash; initial public release</p>"),
