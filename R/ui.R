@@ -304,14 +304,13 @@ ui = fluidPage( theme=("css/style.css"),
                            tabPanel("Download & Credits",value=6,id=6,
                                     mainPanel(
                                       h3("Points of Significance: Uncertainty and the management of epidemics"),
-                                      p(HTML("Katriona Shea<sup>1</sup>, Ottar Bjørnstad<sup>1,2</sup>, Martin Krzywinski<sup>3*</sup>, Naomi Altman<sup>4</sup>")),
+                                      p(HTML("Katriona Shea<sup>1</sup>, Ottar Bjørnstad<sup>1,2</sup>, <a href='mailto:martink@bcgsc.ca'>Martin Krzywinski</a><sup>3</sup>, Naomi Altman<sup>4</sup>")),
                                       div(
                                       p("1. Department of Biology, The Pennsylvania State University, State College, PA, USA."),
                                       p("2. Department of Entomology, The Pennsylvania State University, State College, PA, USA."),
                                       p("3. Canada’s Michael Smith Genome Sciences Center, Vancouver, British Columbia, Canada."),
                                       p("4. Department of Statistics, The Pennsylvania State University, State College, PA, USA."),
-                                        class="affiliations"),
-                                      p("*",tags$a(href="mailto:martink@bcgsc.ca",tags$i("martink@bcgsc.ca"))),
+                                        class="affiliations"),                                      
 
                                       hr(),
                                       h4("Download code"),
