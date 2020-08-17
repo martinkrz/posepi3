@@ -57,7 +57,7 @@ palette              = c(S="#333333",
                          p1="#b3b3b3",
                          p2="#8cc63f",
                          p3="#006837")
-debug     = TRUE
+debug     = FALSE
 # Plot height and line width for trajectories
 plot_line_width      = 1.5
 plot_text_size       = 12
@@ -122,6 +122,7 @@ p3_min  = 0
 p3_max  = 1
 p3_step = 0.1
 # do timings
+do_timing            = FALSE
 interpretive_default = FALSE
 captions_default     = FALSE
 
